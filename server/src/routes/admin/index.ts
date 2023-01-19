@@ -1,5 +1,4 @@
 import { Router } from "express";
-import { AdminAuthRoutes } from "./auth";
 import { AdminMenuRoutes } from "./menu";
 import { AdminSeatRoutes } from "./seat";
 import { AdminUserRoutes } from "./user";

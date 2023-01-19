@@ -42,7 +42,7 @@ const schema = new Schema<Employee>({
     role: {
         required: true,
         type: String,
-        enum: ["Chef", "Waiter"]
+        enum: ["Chef", "Waiter", "Admin"]
     },
 }, {timestamps: true});
 
