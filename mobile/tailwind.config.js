@@ -8,6 +8,15 @@ module.exports = {
         theme: {
         extend: {},
         colors: {
+            "secondary": {
+                blue: "#5B5F97",
+                orange: "#FFC859"
+            },
+            "primary": {
+                100: "#FF7C7C",
+                200: "#ED254E",
+                300: "#FF5074"
+            },
             "white": {
                 100: "#FFFFFF",
                 200: "#FAFAFA",
@@ -19,7 +28,7 @@ module.exports = {
                 200: "#8A8A8A",
                 300: "#919191",
                 400: "#404040",
-                500: "#465362",
+                blue: "#506b8a",
                 700: "#0E1216"
             },
             "brc": {
