@@ -1,0 +1,61 @@
+.seat-list-modal {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    border-radius: 10px;
+    width: 400px;
+    height: 80vh;
+    padding: 1rem;
+    .searchbar {
+        padding-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        color: var(--text-secondary);
+        border-bottom: 1px solid var(--border-color);
+        input {
+            margin-left: 1rem;
+            font-size: 1rem;
+        }
+    }
+    .list-container {
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+    .list {
+        height: 55px;
+        border-bottom: 1px solid var(--border-color);
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        .list-name {
+            color: var(--text-secondary-blue);
+            font-weight: 500;
+            width: 50%;
+        }
+        .list-id {
+            color: var(--text-secondary-alt);
+        }
+        .list-delete {
+            margin-left: auto;
+            cursor: pointer;
+            svg {
+                color: var(--primary);  
+            }
+        }
+    }
+}
+
+.category-create-modal {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+    border-radius: 10px;
+    width: 400px;
+    header {
+        padding: 1rem;
+        margin-bottom: 1rem;
+        color: var(--text-secondary);
+    }
+
+}

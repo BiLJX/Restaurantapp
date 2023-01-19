@@ -1,0 +1,125 @@
+:root {
+  --secondary-blue: #5B5F97;
+  --secondary-orange: #FFC859;
+  --light-blue: #ABC9FF;
+  --primary: #ED254E;
+  --primary-light: #FF5074;
+  --primary-disabled: #FF7C7C;
+  --white: #FFFFFF;
+  --white-2: #FFFFFF;
+  --white-3: #F1F0F9;
+  --gray-0: #E9E9E9;
+  --gray-1: #c2c2c2;
+  --gray-2: #8A8A8A;
+  --gray-3: #404040;
+  --gray-4: #919191;
+  --gray-5: #4e4e4e;
+  --black-0: #000;
+  --black-1: #0c0c0c59;
+  --black-blue: #0E1216;
+  --black-blue-2: #465362;
+}
+
+
+
+
+.light-mode {
+  --background: var(--white-2);
+  --foreground: #fff;
+  --text-input: var(--black-blue);
+  --text-primary: var(--black-blue);
+  --text-secondary: var(--gray-3);
+  --text-secondary-blue: #465362;
+  --text-secondary-alt: var(--gray-2);
+  --border-color: var(--gray-1);
+  --border-color-dark: var(--gray-3);
+  --border-color-alt: #CBCBCB;
+  --drop-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+  --image-background: var(--gray-1);
+  --icon-wrapper-background: var(--gray-0);
+  --icon-color: #6A6A6A;
+  --input-placeholder-dark: var(--gray-2);
+  --skeleton: var(--gray-0);
+  --skeleton-alt: var(--white);
+  --input-background: var(--gray-0);
+  --input-background-2: #a9a8af;
+  --radio-border-color: #3e3e3e;
+
+  --nav-width: 230px;
+  --nav-inacitve: var(--black-blue-2);
+  --header-height: 86px;
+  --nav-background: #fff;
+  --header-background: #fff;
+  --bubble-text-background: var(--background)
+}
+
+* {
+  margin: 0;
+  /* font-family: 'M PLUS Rounded 1c', sans-serif; */
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  background: var(--background);
+  overflow-x: hidden;
+}
+
+.full-img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+a {
+  text-decoration: none;
+  color: var(--nav-inacitve);
+  cursor: pointer !important;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #4848486e;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 888;
+  overflow-y: auto;
+  div:active {
+    outline: none;
+  }
+  div:focus {
+    outline: none;
+  }
+}
+
+
+.ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-primary {
+  color: var(--text-primary);
+}
+
+.text-secondary {
+  color: var(--text-secondary);
+}
+
+.text-secondary-alt {
+  color: var(--text-secondary-alt);
+}

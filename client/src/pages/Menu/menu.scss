@@ -1,0 +1,31 @@
+.food-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, 220px);
+    gap: 1rem;
+}
+
+.menu-search-title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    .search-container {
+        display: flex;
+        margin-right: 1rem;
+        border-radius: 10px;
+        padding: .3rem;
+        margin-left: auto;
+        background-color: var(--input-background);
+        width: 230px;
+        .search-icon {
+            color: var(--text-secondary-alt);
+            margin-right: .5rem;
+        }
+        .search-input {
+            flex: 1;
+            font-size: .9rem;
+            &::placeholder {
+                font-weight: normal !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+.menu-form-container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding: 2rem;
+    .form-input {
+        margin-bottom: 1rem;
+    }
+    .form-text-area {
+        border: 2px solid var(--border-color);
+        padding: 1rem;
+        font-size: 1rem;
+        margin-bottom: 1rem;
+        border-radius: 5px;
+    }
+    .food-image-uploader {
+        margin-bottom: 1rem;
+    }
+}

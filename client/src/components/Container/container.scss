@@ -1,0 +1,6 @@
+.container {
+    padding: 1rem;
+    &.elevated {
+        background-color: var(--foreground);
+    }
+}

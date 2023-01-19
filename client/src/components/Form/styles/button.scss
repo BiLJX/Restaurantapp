@@ -1,0 +1,39 @@
+.form-button {
+    color: #fff;
+    cursor: pointer;
+    font-size: .9rem;
+    padding: .8em;
+    font-weight: 500;
+    width: auto;
+    :disabled {
+        cursor: default;
+    }
+    &.primary {
+        background-color: var(--primary);
+        :disabled {
+            background-color: var(--primary-light);
+        }
+    }
+    &.secondary {
+        background-color: var(--secondary-blue);
+    }
+    &.secondary-2 {
+        background-color: var(--secondary-orange);
+    }
+}
+
+.form-buttons-container {
+    display: flex;
+    button, div {
+        flex: 1
+    }
+
+    .form-cancel-button {
+        font-size: .9rem;
+        padding: .8em;
+        font-weight: 500;
+        background-color: transparent;
+        color: var(--text-secondary);
+        cursor: pointer;
+    }
+}

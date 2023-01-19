@@ -1,0 +1,41 @@
+#employees-page {
+
+    .contents-container {
+        display: flex;
+        flex-direction: column;
+        padding: 0 2rem;
+        width: 100%;
+        height: 81vh;
+    }
+    
+    .title {
+        padding: 1.5rem 0;
+        color: var(--text-title);
+        font-weight: 500;
+    }
+
+    .search-container {
+        display: flex;
+        margin-right: 1rem;
+        border-radius: 10px;
+        padding: .1rem .3rem;
+        margin-left: auto;
+        border: 1px solid var(--border-color);
+        width: 230px;
+        flex: 1;
+        .search-icon {
+            color: var(--text-secondary-alt);
+            margin-right: .5rem;
+        }
+        .search-input {
+            flex: 1;
+            font-size: .9rem;
+            &::placeholder {
+                font-weight: normal !important;
+            }
+        }
+    }
+
+
+
+}

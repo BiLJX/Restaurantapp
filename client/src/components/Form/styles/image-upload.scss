@@ -1,0 +1,8 @@
+.image-uploader {
+    border: 1px solid var(--border-color);
+    cursor: pointer;
+    overflow: hidden;
+    svg {
+        color: var(--border-color);
+    }
+}

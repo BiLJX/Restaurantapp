@@ -1,0 +1,36 @@
+.header {
+    display: flex;
+    height: var(--header-height);
+    width: 100%;
+    position: fixed;
+    margin-left: var(--nav-width);
+    width: calc(100vw - var(--nav-width));
+    background-color: var(--foreground);
+    padding: 0 1rem;
+    align-items: center;
+}
+
+.header-labels {
+    display: flex;
+    flex-direction: column;
+    h1 {
+        font-size: 1.3rem;
+        color: var(--text-primary);
+    }
+    span {
+        margin-top: .5rem;
+        font-size: .9rem;
+        color: var(--text-secondary-alt);
+    }
+}
+
+.header-button-container {
+    margin-left: auto;
+    a {
+        cursor: pointer;
+        svg {
+            color: var(--text-primary);
+        }
+    }
+    
+}

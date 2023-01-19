@@ -1,0 +1,106 @@
+button,
+input,
+select,
+textarea {
+  -webkit-appearance: none;
+  border: none;
+  color: var(--text-input);
+  background-color: transparent;
+}
+textarea:focus,
+:active select:focus,
+:active,
+input:focus,
+:active {
+  outline: none;
+  border: none;
+}
+
+input {
+  cursor: auto;
+}
+
+input::-webkit-input-placeholder {
+color: var(--text-secondary-alt);
+  font-weight: 400;
+}
+
+input::-moz-placeholder {
+    color: var(--text-secondary-alt);
+    font-weight: 500;
+}
+
+input:-ms-input-placeholder {
+    color: var(--text-secondary-alt);
+   font-weight: 500;
+}
+
+input::-ms-input-placeholder {
+    color: var(--text-secondary-alt);
+   font-weight: 500;
+}
+
+input::placeholder {
+    color: var(--text-secondary-alt);
+   font-weight: 500;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px var(--input-background) inset !important;
+  border: none;
+  outline: none;
+  -webkit-text-fill-color: var(--text-input);
+}
+
+select option {
+  background-color: var(--background);
+  -webkit-appearance: none;
+}
+
+select:focus, :active {
+  border: none;
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}
+
+input[type="date"]:before {
+  // color: lightgrey;
+  content: attr(placeholder) !important;
+  margin-right: 0.5em;
+}
+input[type="date"]:focus:before {
+  content: '' !important;
+}
+
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
+}
+
+.ReactModal__Content{
+  transform: scale(0);
+  transition: 200ms ease-in-out;
+}
+
+.ReactModal__Content--after-open{
+  transform: scale(1);
+}
+
+.ReactModal__Content--before-close{
+  transform: scale(0);
+}

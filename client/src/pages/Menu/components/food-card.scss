@@ -1,0 +1,43 @@
+.food-card {
+    border: 1px solid var(--border-color);
+    .food-image {
+        overflow: hidden;
+        border-radius: 10px;
+        background-color: var(--image-background);
+        width: 100%;
+        height: 100px;
+    }
+    .food-name {
+        padding: 1rem 0;
+        text-align: center;
+        color: var(--text-primary);
+        font-weight: 500;
+    }
+    .price {
+        border-right: 2px solid var(--border-color);
+        padding-right: 1rem;
+    }
+    .food-info {
+        display: flex;
+        padding: 1rem 0;
+        font-size: .9rem;
+    }
+    .category {
+        margin-left: 1rem;
+        flex: 1;
+    }
+}
+
+.add-food-card {
+    height: 260px;
+    .dotted-circle {
+        border-radius: 100%;
+        border: 2px dotted var(--border-color);
+        height: 130px;
+        width: 130px;
+        svg {
+            color: var(--border-color);
+            font-size: 5rem;
+        }
+    }
+}
