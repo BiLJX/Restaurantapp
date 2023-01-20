@@ -13,7 +13,25 @@ export const adminAuth = async(req: Request, res: Response, next: NextFunction) 
         if(!session) return jsonResponse.notAuthorized();
         const decodedData: {user_id: string}|undefined = <any>jwt.verify(session, ADMIN_SECRET);
         if(!decodedData) return jsonResponse.notAuthorized();
-        const admin = await Employees.findOne({user_id: decodedData.user_id, role: "Admin"}).select("-password");
+        const admin = await Employees.aggregate([
+            {
+                $match: {
+                    user_id: decodedData.user_id, 
+                    role: "Admin"
+                },
+            },
+            {
+                $lookup: {
+                    as: "restaurant",
+                    from: "restaurants",
+                    foreignField: "restaurant_id",
+                    localField: "restaurant_id"
+                },
+            },
+            {
+                $unwind: "$restaurant"
+            }
+        ]);
         if(!admin) return jsonResponse.notAuthorized("Account not found");
         res.locals.admin = admin;
         next();

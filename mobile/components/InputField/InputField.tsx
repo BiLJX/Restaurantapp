@@ -7,11 +7,13 @@ interface Props {
     onChange: (value: string) => void;
     placeholder: string;
     icon: JSX.Element;
+    secureTextEntry?: boolean
 }
 export default function AuthInput({
     onChange,
     placeholder,
-    icon
+    icon,
+    secureTextEntry
 }: Props){
     return(
         <View className="flex-row items-center mb-4">
@@ -22,9 +24,10 @@ export default function AuthInput({
             autoCapitalize="none" 
             autoComplete="off" 
             keyboardType="email-address" 
-            className="ml-2 py-2 border-b-[1px] border-solid border-gray-100 flex-1 mb-2 text-base" 
+            className="ml-2 h-9 border-b-[1px] border-solid border-gray-100 flex-1 mb-2 text-base" 
             placeholder={placeholder}
             onChangeText={onChange}
+            secureTextEntry = {secureTextEntry}
             />
         </View>
     )

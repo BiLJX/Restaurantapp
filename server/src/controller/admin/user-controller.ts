@@ -47,7 +47,7 @@ export const createEmployee: Controller = (req, res) => {
             if(!roleValidation.success) return jsonResponse.clientError(roleValidation.message);
 
             const salt = await bcrypt.genSalt(10);
-            const password = await bcrypt.hash(datas.password, salt);
+            const password = await bcrypt.hash(datas.password.trim(), salt);
             const employee = new Employees({
                 ...datas,
                 user_id,

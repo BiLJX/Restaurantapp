@@ -13,5 +13,8 @@ interface User {
 export interface Admin extends User {}
 
 export interface Employee extends User {
+    restaurant: {
+        name: string
+    },
     role: "Chef"|"Waiter"|"Admin"
 }

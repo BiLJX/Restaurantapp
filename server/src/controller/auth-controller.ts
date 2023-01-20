@@ -15,8 +15,28 @@ export const adminLogin: Controller = async(req, res) => {
         const { email, password } = req.body;
         if(!email) return jsonResponse.clientError("Please provide email");
         if(!password) return jsonResponse.clientError("Please provide password");
-        const admin = await Employees.findOne({email, role: "Admin"});
+        const adminArr = await Employees.aggregate([
+            {$match: {email, role: "Admin"}},
+            {
+                $lookup: {
+                    as: "restaurant",
+                    from: "restaurants",
+                    foreignField: "restaurant_id",
+                    localField: "restaurant_id"
+                },
+            },
+            {
+                $unwind: "$restaurant"
+            },
+            {
+                $project: {
+                    password: 0
+                }
+            }
+        ]);
+        const admin = adminArr[0]
         if(!admin) return jsonResponse.clientError("Acount not found");
+       
         const password_matched = await bcrypt.compare(password, admin.password);
         if(!password_matched) return jsonResponse.clientError("Invalid password");
         
@@ -34,20 +54,33 @@ export const adminLogin: Controller = async(req, res) => {
 
 export const employeeLogin: Controller = async(req, res) => {
     const jsonResponse = new JsonResponse(res);
-    const { role } = req.query;
     try {
+        const { email, password, role } = req.body;
         if(!role) return jsonResponse.clientError("Invalid role");
-        const { email, password } = req.body;
         if(!email) return jsonResponse.clientError("Please provide email");
         if(!password) return jsonResponse.clientError("Please provide password");
-        const employee = await Employees.findOne({email, role});
+        const employeeArr = await Employees.aggregate([
+            {$match: {email, role}},
+            {
+                $lookup: {
+                    as: "restaurant",
+                    from: "restaurants",
+                    foreignField: "restaurant_id",
+                    localField: "restaurant_id"
+                },
+            },
+            {
+                $unwind: "$restaurant"
+            },
+        ]);
+        const employee = employeeArr[0]
         if(!employee) return jsonResponse.clientError("Acount not found");
         const password_matched = await bcrypt.compare(password, employee.password);
         if(!password_matched) return jsonResponse.clientError("Invalid password");
         //jwt
         const token = jwt.sign({user_id: employee.user_id}, EMPLOYEE_SECRET, {expiresIn: "10d"});
-        res.cookie("session", token, options);
         delete (employee as any).password;
+        res.cookie("session", token, options);
         jsonResponse.success({employee, token}, "Scucessfully logged in");
     } catch (error) {
         console.log(error)

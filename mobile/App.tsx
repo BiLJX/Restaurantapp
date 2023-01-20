@@ -1,11 +1,11 @@
 import AppNav from "./navigation/AppNav";
-import { StatusBar, View, StyleSheet, Text } from "react-native";
+import { Provider } from "react-redux";
+import store from "./redux/store";
+
 export default function App(){
     return(
-
-
-        <AppNav />
-
-
+        <Provider store={store}>
+            <AppNav />
+        </Provider>
     )
 }
