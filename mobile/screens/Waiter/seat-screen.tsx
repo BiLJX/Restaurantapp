@@ -8,7 +8,10 @@ import { toastError } from "../../components/Toast/toast";
 import { addSeatAray } from "../../redux/seatReducer";
 import { useEffect, useState } from "react"
 import TableCard from "../../components/Table/TableCard";
-export default function SeatScreen(){
+import { selectSeat } from "../../redux/takeorderReducer";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+type Props = NativeStackScreenProps<WaiterStackParamList>;
+export default function SeatScreen({navigation}: Props){
     const seats = useSelector((state: RootState)=>state.seats);
     const dispatch = useDispatch();
     const [search, setSearch] = useState("");
@@ -17,6 +20,10 @@ export default function SeatScreen(){
         if(res.error) return toastError(res.message);
         dispatch(addSeatAray(res.data));
     }
+    const onSelectSeat = (seat_id: string) => {
+        navigation.navigate("Menu");
+        dispatch(selectSeat(seat_id));
+    } 
     useEffect(()=>{
         fetchSeats()
     }, [search])
@@ -29,7 +36,7 @@ export default function SeatScreen(){
                 <FlatList
                 data={seats}
                 key = {"#"}
-                renderItem = {({item})=><TableCard data={item} />}
+                renderItem = {({item})=><TableCard onPress={onSelectSeat} data={item} />}
                 numColumns = {2}
                 showsVerticalScrollIndicator = {false}
                 />            

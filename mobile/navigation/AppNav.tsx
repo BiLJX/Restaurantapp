@@ -17,7 +17,6 @@ export default function AppNav(){
     const fetchCurrentUser = async() => {
         setLoading(true);
         const res = await getCurrentEmployee();
-        console.log(res)
         if(!res.error){
             dispatch(addCurrentEmployee(res.data));
         }
