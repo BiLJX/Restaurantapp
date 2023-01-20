@@ -12,7 +12,7 @@ import { login } from "../../api/auth-api";
 import { toastError, toastSuccess } from "../../components/Toast/toast";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useDispatch, useSelector } from "react-redux";
-import { addCurrentEmployee } from "../../redux/employee/employeeReducer";
+import { addCurrentEmployee } from "../../redux/employeeReducer";
 import { RootState } from "redux/store";
 
 export default function LoginWaiterScreen(){

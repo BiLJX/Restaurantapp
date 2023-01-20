@@ -19,7 +19,7 @@ module.exports = {
             },
             "white": {
                 100: "#FFFFFF",
-                200: "#FAFAFA",
+                200: "#FBFBFB",
                 300: "#E9E9E9",
                 400: "#c2c2c2"
             },

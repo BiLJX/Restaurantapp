@@ -30,10 +30,15 @@ export const adminAuth = async(req: Request, res: Response, next: NextFunction) 
             },
             {
                 $unwind: "$restaurant"
+            },
+            {
+                $project: {
+                    password: 0
+                }
             }
         ]);
-        if(!admin) return jsonResponse.notAuthorized("Account not found");
-        res.locals.admin = admin;
+        if(!admin[0]) return jsonResponse.notAuthorized("Account not found");
+        res.locals.admin = admin[0];
         next();
     } catch (error) {
         console.log(error);

@@ -3,3 +3,13 @@ declare type AuthStackParamList = {
     "Login Chef": undefined,
     "Login Waiter": undefined
 }
+
+declare type WaiterStackParamList = {
+    "Home",
+    "Tables",
+    "Menu",
+    "Food",
+    "List",
+    "Orders",
+    "Bill",
+}

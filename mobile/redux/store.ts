@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import employeeReducer from "./employee/employeeReducer";
+import employeeReducer from "./employeeReducer";
+import seatReducer from "./seatReducer";
 
 const store = configureStore({
     reducer: {
-        current_employee: employeeReducer
+        current_employee: employeeReducer,
+        seats: seatReducer
     }
 })
 const state = store.getState();

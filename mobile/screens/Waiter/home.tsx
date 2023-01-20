@@ -6,8 +6,10 @@ import { Ionicons } from '@expo/vector-icons';
 import { ICON_COLORS } from "../../constants/colors";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { logout } from "../../api/auth-api";
-import { removeCurrentEmployee } from "../../redux/employee/employeeReducer";
-export default function WaiterHome(){
+import { removeCurrentEmployee } from "../../redux/employeeReducer";
+import { NativeStackScreenProps } from "@react-navigation/native-stack";
+type Props = NativeStackScreenProps<WaiterStackParamList>;
+export default function WaiterHome({navigation}: Props){
     const employee = useSelector((state: RootState)=>state.current_employee.data) as Employee;
     const dispatch = useDispatch();
     const onLogout = async() => {
@@ -17,7 +19,7 @@ export default function WaiterHome(){
     return(
         <View className="flex-1 bg-white-100 p-12 items-center">
             <Text className="text-3xl font-bold text-center text-secondary-blue">Welcome to {employee.restaurant.name}</Text>
-            <TouchableHighlight className="mt-16">
+            <TouchableHighlight className="mt-16" onPress={()=>navigation.navigate("Tables")}>
                 <View className="border-[3px] bg-white-200 border-primary-200 w-[172] h-[172] rounded-lg justify-center items-center">
                     <Ionicons name="fast-food" size={80} color={ICON_COLORS.primary} />
                     <Text className="text-primary-200 font-bold text-lg mt-2">Take Orders</Text>

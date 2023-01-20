@@ -9,7 +9,7 @@ import { Employees } from "../models/Employee";
 export const employeeAuthMiddleware = async(req: Request, res: Response, next: NextFunction) => {
     const jsonResponse = new JsonResponse(res);
     try {
-        const session = req.headers.Authorization as string;
+        const session = req.headers.authorization as string;
         if(!session) return jsonResponse.notAuthorized();
         const decodedData: {user_id: string}|undefined = <any>jwt.verify(session, EMPLOYEE_SECRET);
         if(!decodedData) return jsonResponse.notAuthorized();
@@ -17,7 +17,7 @@ export const employeeAuthMiddleware = async(req: Request, res: Response, next: N
             {
                 $match: {
                     user_id: decodedData.user_id, 
-                    role: {$not: "Admin"}
+                    role: {$ne: "Admin"}
                 },
             },
             {

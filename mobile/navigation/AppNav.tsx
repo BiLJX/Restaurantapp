@@ -8,7 +8,7 @@ import { RootState } from "../redux/store";
 import { useEffect, useState } from "react"
 import WaiterStack from "./WaiterStack";
 import { getCurrentEmployee } from "../api/auth-api";
-import { addCurrentEmployee } from "../redux/employee/employeeReducer";
+import { addCurrentEmployee } from "../redux/employeeReducer";
 import ChefStack from "./ChefStack";
 export default function AppNav(){
     const dispatch = useDispatch();
