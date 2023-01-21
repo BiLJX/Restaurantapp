@@ -4,6 +4,7 @@ import WaiterHome from "../screens/Waiter/home";
 import { ICON_COLORS } from "../constants/colors";
 import MenuScreen from "screens/Waiter/menu";
 import FoodScreen from "screens/Waiter/FoodScreen";
+import TakeOrderlistScreen from "screens/Waiter/TakeOrderlistScreen";
 
 const Stack = createNativeStackNavigator<WaiterStackParamList>();
 export default function WaiterStack(){
@@ -17,7 +18,7 @@ export default function WaiterStack(){
             <Stack.Screen name = "Tables" component={SeatScreen}/>
             <Stack.Screen name = "Menu" component={MenuScreen} options = {{headerShadowVisible: false}} />
             <Stack.Screen name = "Food" component={FoodScreen} />
-
+            <Stack.Screen name = "List" component={TakeOrderlistScreen} />
         </Stack.Navigator>
     )
 }

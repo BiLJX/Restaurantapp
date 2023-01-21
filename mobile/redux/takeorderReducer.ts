@@ -1,11 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food } from "@shared/Menu"
-export interface FoodOrder extends Food{
+export interface FoodOrderItem extends Food{
     quantity: number
 }
 interface TakeorderState {
     seat_id: string,
-    foods: FoodOrder[],
+    foods: FoodOrderItem[],
 }
 
 const initialState: TakeorderState = {
@@ -21,10 +21,10 @@ const takeorderReducer = createSlice({
             state.foods = [];
             state.seat_id = action.payload;
         },
-        addFoodToTakeOrder: (state, action: PayloadAction<FoodOrder>) => {
+        addFoodToTakeOrder: (state, action: PayloadAction<FoodOrderItem>) => {
             state.foods.push(action.payload)
         },
-        updateFoodOfTakeOrder: (state, action: PayloadAction<FoodOrder>) => {
+        updateFoodOfTakeOrder: (state, action: PayloadAction<FoodOrderItem>) => {
             state.foods = state.foods.map(x=>{
                 if(x.food_id === action.payload.food_id){
                     x = action.payload

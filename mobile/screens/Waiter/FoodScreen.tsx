@@ -21,7 +21,9 @@ const FoodScreen = ({navigation, route}: Props) => {
     
     const addToList = () => {
         if(quantity === 0) return toastError("Please add quantity");
-        if(food_exists) return dispatch(updateFoodOfTakeOrder({...food, quantity}));
+        if(food_exists) {
+            return dispatch(updateFoodOfTakeOrder({...food, quantity}));
+        }
         dispatch(addFoodToTakeOrder({...food, quantity}));
         navigation.goBack();
     }
@@ -50,7 +52,7 @@ const FoodScreen = ({navigation, route}: Props) => {
                         </View>
                     </TouchableHighlight>
                 </View>
-                <Button onPress={addToList}>Add to list</Button>
+                <Button onPress={addToList}>{food_exists?"Edit Item":"Add to list"}</Button>
             </View>
         </View>
     )

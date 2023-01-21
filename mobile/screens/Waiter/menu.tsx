@@ -10,6 +10,7 @@ import { RootState } from 'redux/store';
 import { addFoodArray } from 'redux/foodReducer';
 import FoodCard from './components/foodCard';
 import SearchField from 'components/Search/searchField';
+import { Button } from 'components/Buttons/buttons';
 type Props = NativeStackScreenProps<WaiterStackParamList>;
 const Tab = createBottomTabNavigator();
 
@@ -70,7 +71,9 @@ const MenuScreen = ({navigation}: Props) => {
                 />
                 </View>
             </View>
-           
+            <View className='w-full p-4'>
+                <Button onPress={()=>navigation.navigate("List")}>View List</Button>
+            </View>
         </View>
   )
 }
