@@ -9,13 +9,14 @@ module.exports = function(api) {
         {
             "root": ["./"],
             "alias": {
-              "components/*": "components/*",
-              "assets/*": "assets/*",
-              "screens/*": "screens/*",
-              "navigation/*": "navigation/*",
-              "api/*": "api/*",
-              "utils/*": "utils/*",
-            }
+              "components/*": "./components/",
+              "assets/*": "./assets/",
+              "screens/*": "./screens/",
+              "navigation/*": "./navigation/",
+              "api/*": "./api/*",
+              "utils/*": "./utils/*",
+            },
+            "extensions": ['.js', '.ts', '.tsx', '.json']
         }
       ]
     ],
