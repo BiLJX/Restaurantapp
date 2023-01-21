@@ -2,10 +2,14 @@ import { View, Text, Dimensions, StyleSheet, ScrollView, FlatList, TouchableOpac
 import React, { useEffect, useState } from 'react';
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import FoodListScreen from './FoodListScreen';
 import { FoodCategory } from '@shared/Menu';
-import { getFoodCategories } from 'api/menu';
+import { getFoodCategories, getFoods } from 'api/menu';
 import { toastError } from 'components/Toast/toast';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from 'redux/store';
+import { addFoodArray } from 'redux/foodReducer';
+import FoodCard from './components/foodCard';
+import SearchField from 'components/Search/searchField';
 type Props = NativeStackScreenProps<WaiterStackParamList>;
 const Tab = createBottomTabNavigator();
 
@@ -17,12 +21,21 @@ interface FoodCategoryItem {
 
 const MenuScreen = ({navigation}: Props) => {
     const [categories, setCategories] = useState<FoodCategoryItem[]>([]);
+    const [search, setSearch] = useState("");
+    const foods = useSelector((state: RootState)=>state.foods.foods);
+    const dispatch = useDispatch()
+    const fetchFoods = async(data: {category: string, search: string}) => {
+        const res = await getFoods(data);
+        if(res.error) return toastError(res.message);
+        dispatch(addFoodArray(res.data));
+    }
     const selectCategory = (id: string) => {
         setCategories(categories.map(x=>{
             if(x.is_active) x.is_active = false;
             if(x.food_category_id === id) x.is_active = true;
             return x;
-        }))
+        }));
+        fetchFoods({search, category: id === "all"?"":id})
     }
     useEffect(()=>{
         getFoodCategories().then(res=>{
@@ -31,6 +44,9 @@ const MenuScreen = ({navigation}: Props) => {
             setCategories([{name: "All", food_category_id: "all", is_active: true} ,...data]);
         })
     }, [])
+    useEffect(()=>{
+        fetchFoods({search, category: ""})
+    }, [search])
     return (
         <View className='flex-1 bg-white-200'>
             <View className='w-full bg-white-100 border-b-[1px] border-b-white-300'>
@@ -41,11 +57,20 @@ const MenuScreen = ({navigation}: Props) => {
                showsHorizontalScrollIndicator = {false}
                />
             </View>
-            <View className='flex-1'>
-                <Tab.Navigator initialRouteName='All' screenOptions={{headerShown: false,tabBarStyle: {display: "none"}}}>
-                    <Tab.Screen name='All' component={FoodListScreen} />
-                </Tab.Navigator>
+            <View className='flex-1 p-4'>
+                <View className='mb-4'>
+                    <SearchField label='Search' onSearch={setSearch} />
+                </View>
+                <View className='flex-1'>
+                <FlatList
+                    key="FoodCard"
+                    numColumns={2}
+                    data={foods}
+                    renderItem = {({item})=><FoodCard data={item} />}
+                />
+                </View>
             </View>
+           
         </View>
   )
 }
