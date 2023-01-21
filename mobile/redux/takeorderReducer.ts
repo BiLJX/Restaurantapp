@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food } from "@shared/Menu"
-interface FoodOrder extends Food{
+export interface FoodOrder extends Food{
     quantity: number
 }
 interface TakeorderState {

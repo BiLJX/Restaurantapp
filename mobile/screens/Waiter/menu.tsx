@@ -66,7 +66,7 @@ const MenuScreen = ({navigation}: Props) => {
                     key="FoodCard"
                     numColumns={2}
                     data={foods}
-                    renderItem = {({item})=><FoodCard data={item} />}
+                    renderItem = {({item})=><FoodCard onPress={data=>navigation.navigate("Food", data)} data={item} />}
                 />
                 </View>
             </View>

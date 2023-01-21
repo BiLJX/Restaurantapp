@@ -8,7 +8,15 @@ declare type WaiterStackParamList = {
     "Home",
     "Tables",
     "Menu",
-    "Food",
+    "Food": {
+        food_id: string,
+        image_url: string,
+        name: string,
+        price: number;
+        food_category_id: string;
+        category_name: string;
+        description: string;
+    },
     "List",
     "Orders",
     "Bill",
