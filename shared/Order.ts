@@ -1,11 +1,19 @@
 import { Food } from "./Menu";
 
-export interface FoodOrder {
+export interface OrderItem {
+    order_id: string,
+    order_by: string,
+    restaurant_id: string,
+    seat_id: string,
     quantity: number,
-    food_id: string
+    food_id: string,
+    status: "Delivered"|"Ready"|"Cooking"|"Pending"
 }
 
-export interface TakeOrder {
+export interface Order {
+    order_by: string,
+    restaurant_id: string
+    order_id: string,
     seat_id: string,
-    foods: FoodOrder[],
+    foods: OrderItem[],
 }

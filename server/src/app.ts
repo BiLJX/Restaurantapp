@@ -10,6 +10,8 @@ import bodyParser from "body-parser"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import { ApiRoutes } from "./routes"
+import { EMPLOYEE_SECRET } from "./secret"
+import { Employees } from "./models/Employee"
 
 
 //constants
@@ -40,21 +42,24 @@ async function _INIT_(){
         console.log("listening on port "+PORT+"...")
     });
     const io = new Server(server);
-    io.use((socket, next)=>{
+    io.use(async(socket, next)=>{
         try {
-            // const token = <string>socket.handshake.query.token;
-            // if(!token) return next(new Error("Not Authorized"));;
-            // const user: any = jwt.verify(token, USER_PASSWORD_SECRET);
-            // if(!user) return next(new Error("Not Authorized"));
-            // socket.user_id = user.user_id;
-            // return next()
+            const token = <string>socket.handshake.query.token;
+            if(!token) return next(new Error("Not Authorized"));
+            const {user_id}: any = jwt.verify(token, EMPLOYEE_SECRET);
+            const user = await Employees.findOne({user_id});
+            if(!user) return next(new Error("Not Authorized"));
+            socket.user_id = user.user_id;
+            socket.restaurant_id = user.restaurant_id;
+            socket.role = user.role as any;
+            return next()
         } catch (error) {
             console.log(error)
             return;
         }
     }).on("connection", (socket)=>{
-        // socket.join(socket.user_id);
-        // console.log("user connected " + socket.user_id)
+        socket.join([socket.role ,socket.user_id, socket.restaurant_id]);
+        console.log("User connected " + socket.user_id)
     })
 }
 mongoose.connect(CONNECTION_URL).then(_INIT_)

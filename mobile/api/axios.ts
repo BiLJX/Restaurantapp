@@ -1,10 +1,10 @@
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import ax from "axios"
 
-export const URI = "http://192.168.1.64:5000"
+export const CONNECTION_URI = "http://192.168.1.64:5000"
 
 const axios = ax.create({
-    baseURL: URI,
+    baseURL: CONNECTION_URI,
     withCredentials: true,
     headers: {
         'Access-Control-Allow-Origin': '*',

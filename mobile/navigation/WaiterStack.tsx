@@ -8,7 +8,7 @@ import TakeOrderlistScreen from "screens/Waiter/TakeOrderlistScreen";
 
 const Stack = createNativeStackNavigator<WaiterStackParamList>();
 export default function WaiterStack(){
-
+    
     return(
         <Stack.Navigator screenOptions={{
             headerTintColor: ICON_COLORS.header_color,
