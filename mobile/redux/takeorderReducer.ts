@@ -18,10 +18,25 @@ const takeorderReducer = createSlice({
     initialState,
     reducers: {
         selectSeat: (state, action: PayloadAction<string>) => {
-            state.seat_id = action.payload
+            state.foods = [];
+            state.seat_id = action.payload;
+        },
+        addFoodToTakeOrder: (state, action: PayloadAction<FoodOrder>) => {
+            state.foods.push(action.payload)
+        },
+        updateFoodOfTakeOrder: (state, action: PayloadAction<FoodOrder>) => {
+            state.foods = state.foods.map(x=>{
+                if(x.food_id === action.payload.food_id){
+                    x = action.payload
+                }
+                return x;
+            })
+        },
+        removeFoodFromTakeOrder: (state, action: PayloadAction<string>) => {
+            state.foods = state.foods.filter(x=>x.food_id !== action.payload);
         }
     }
 })
 
 export default takeorderReducer.reducer;
-export const { selectSeat } = takeorderReducer.actions; 
+export const { selectSeat, addFoodToTakeOrder, removeFoodFromTakeOrder, updateFoodOfTakeOrder } = takeorderReducer.actions; 
