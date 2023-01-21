@@ -17,3 +17,11 @@ export interface Order {
     seat_id: string,
     foods: OrderItem[],
 }
+
+export interface TakeOrderItem extends Food{
+    quantity: number
+}
+export interface TakeorderClientData {
+    seat_id: string,
+    foods: TakeOrderItem[],
+}

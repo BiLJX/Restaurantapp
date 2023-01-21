@@ -1,15 +1,26 @@
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
-import React from 'react'
+import React, { useCallback, useContext } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
-import { FoodOrderItem, removeFoodFromTakeOrder } from 'redux/takeorderReducer'
+import { clearTakeOrder, removeFoodFromTakeOrder } from 'redux/takeorderReducer'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootState } from 'redux/store'
 import { Entypo } from '@expo/vector-icons';
+import { TakeOrderItem } from '@shared/Order'
+import { Button } from 'components/Buttons/buttons'
+import { SocketContext } from 'contexts/socketContext'
 
 type Props = NativeStackScreenProps<WaiterStackParamList, "List">
 
 const TakeOrderlistScreen = ({navigation}: Props) => {
-    const foodorders = useSelector((state: RootState)=>state.takeorder.foods)
+    const order = useSelector((state: RootState)=>state.takeorder);
+    const foodorders = order.foods;
+    const socket = useContext(SocketContext);
+    const dispatch = useDispatch();
+    const onOrder = useCallback(()=>{
+        navigation.pop(2);
+        socket.emit("order:create", order);
+        dispatch(clearTakeOrder());
+    }, [])
     return (
         <View className='flex-1 bg-white-200 p-4'>
             <Text className='text-xl font-semibold text-gray-700'>Items list</Text>
@@ -19,11 +30,14 @@ const TakeOrderlistScreen = ({navigation}: Props) => {
                 renderItem = {({item})=><OrderCard onPress={data=>navigation.navigate("Food", data)} data = {item} />}
                 />
             </View>
+            <View className='py-4'>
+                <Button onPress={onOrder}>Order</Button>
+            </View>
         </View>
     )
 }
 
-const OrderCard = ({data, onPress}: {data: FoodOrderItem, onPress: (data: FoodOrderItem)=> void}) => {
+const OrderCard = ({data, onPress}: {data: TakeOrderItem, onPress: (data: TakeOrderItem)=> void}) => {
     const dispatch = useDispatch();
     return(
         <TouchableOpacity className='w-full rounded-lg mb-3' onPress={()=>onPress(data)}>

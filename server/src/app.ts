@@ -12,6 +12,7 @@ import cookieParser from "cookie-parser"
 import { ApiRoutes } from "./routes"
 import { EMPLOYEE_SECRET } from "./secret"
 import { Employees } from "./models/Employee"
+import orderHandler from "./handler/orderHandler"
 
 
 //constants
@@ -59,7 +60,7 @@ async function _INIT_(){
         }
     }).on("connection", (socket)=>{
         socket.join([socket.role ,socket.user_id, socket.restaurant_id]);
-        console.log("User connected " + socket.user_id)
+        orderHandler(socket, io)
     })
 }
 mongoose.connect(CONNECTION_URL).then(_INIT_)

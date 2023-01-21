@@ -37,11 +37,13 @@ export default function AppNav(){
     }
     useEffect(()=>{
         fetchCurrentUser();
+    }, [])
+    useEffect(()=>{
         initializeSocket();
         return(()=>{
             socket?.disconnect();
         })
-    }, [])
+    }, [currentEmployee])
 
     if(loading) return (
         <View>

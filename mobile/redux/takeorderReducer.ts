@@ -1,14 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food } from "@shared/Menu"
-export interface FoodOrderItem extends Food{
-    quantity: number
-}
-interface TakeorderState {
-    seat_id: string,
-    foods: FoodOrderItem[],
-}
-
-const initialState: TakeorderState = {
+import { TakeOrderItem, TakeorderClientData } from "@shared/Order"
+const initialState: TakeorderClientData = {
     seat_id: "",
     foods: []
 }
@@ -21,10 +14,10 @@ const takeorderReducer = createSlice({
             state.foods = [];
             state.seat_id = action.payload;
         },
-        addFoodToTakeOrder: (state, action: PayloadAction<FoodOrderItem>) => {
+        addFoodToTakeOrder: (state, action: PayloadAction<TakeOrderItem>) => {
             state.foods.push(action.payload)
         },
-        updateFoodOfTakeOrder: (state, action: PayloadAction<FoodOrderItem>) => {
+        updateFoodOfTakeOrder: (state, action: PayloadAction<TakeOrderItem>) => {
             state.foods = state.foods.map(x=>{
                 if(x.food_id === action.payload.food_id){
                     x = action.payload
@@ -34,9 +27,19 @@ const takeorderReducer = createSlice({
         },
         removeFoodFromTakeOrder: (state, action: PayloadAction<string>) => {
             state.foods = state.foods.filter(x=>x.food_id !== action.payload);
+        },
+        clearTakeOrder: (state) => {
+            state.foods = []
+            state.seat_id = ""
         }
     }
 })
 
 export default takeorderReducer.reducer;
-export const { selectSeat, addFoodToTakeOrder, removeFoodFromTakeOrder, updateFoodOfTakeOrder } = takeorderReducer.actions; 
+export const { 
+    selectSeat,
+    addFoodToTakeOrder, 
+    removeFoodFromTakeOrder,
+    updateFoodOfTakeOrder,
+    clearTakeOrder
+} = takeorderReducer.actions; 
