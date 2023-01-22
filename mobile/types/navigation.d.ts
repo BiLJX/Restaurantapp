@@ -20,4 +20,11 @@ declare type WaiterStackParamList = {
     "List",
     "Orders",
     "Bill",
+    "Orders By Seat": {seat_id: string};
+}
+
+declare type ChefStackParamList = {
+    "Home",
+    "Orders",
+    
 }

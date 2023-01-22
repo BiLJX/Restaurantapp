@@ -6,8 +6,12 @@ import { Ionicons } from '@expo/vector-icons';
 import { ICON_COLORS } from "../../constants/colors";
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { logout } from "../../api/auth-api";
+import { useEffect } from "react";
 import { removeCurrentEmployee } from "../../redux/employeeReducer";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { getSeats } from "api/seat-api";
+import { addSeatAray } from "redux/seatReducer";
+import { toastError } from "components/Toast/toast";
 type Props = NativeStackScreenProps<WaiterStackParamList>;
 export default function WaiterHome({navigation}: Props){
     const employee = useSelector((state: RootState)=>state.current_employee.data) as Employee;

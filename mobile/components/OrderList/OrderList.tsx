@@ -6,11 +6,12 @@ import { RootState } from 'redux/store'
 import { STATUS_COLORS } from 'constants/colors'
 
 type Props = {
-    status: OrderStatus
+    status: OrderStatus,
+    data?: OrderItem[]
 }
 
-const OrderList = ({status}: Props) => {
-    const orders = useSelector((state: RootState)=>state.orders.filter(x=>x.status === status));
+const OrderList = ({status, data}: Props) => {
+    const orders = data?.filter(x=>x.status === status) || useSelector((state: RootState)=>state.orders.filter(x=>x.status === status));
     return (
         <View className='flex-1'>
             <Text className='text-xl text-gray-700 font-bold w-full'>{status}</Text>

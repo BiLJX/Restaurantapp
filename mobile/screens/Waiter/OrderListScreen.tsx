@@ -2,11 +2,20 @@ import { View, Text, Dimensions, StyleSheet, ScrollView, FlatList, TouchableOpac
 import React, { useState, useEffect } from 'react'
 import { getOrders } from 'api/order-api';
 import { toastError } from 'components/Toast/toast';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addOrderList } from 'redux/orderReducer';
 import OrderList from 'components/OrderList/OrderList';
+import { HideKeyboard } from 'components/Container/HideKeyboard';
+import SearchField from 'components/Search/searchField';
+import { RootState } from 'redux/store';
+import TableCard from 'components/Table/TableCard';
+import { Seat } from '@shared/Seat';
+import { getSeats } from 'api/seat-api';
+import { OrderItem } from '@shared/Order';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { Button } from 'components/Buttons/buttons';
 
-type Props = {}
+type Props = NativeStackScreenProps<WaiterStackParamList, "Orders">
 
 interface NavItem {
     name: string,
@@ -18,7 +27,7 @@ const navItems: NavItem[] = [
     {name: "Seats", is_active: false},
 ]
 
-const OrderListScreen = (props: Props) => {
+const OrderListScreen = ({navigation}: Props) => {
     const [items, setItems] = useState<NavItem[]>(navItems);
     const dispatch = useDispatch();
     const fetchOrder = async() => {
@@ -46,13 +55,76 @@ const OrderListScreen = (props: Props) => {
                showsHorizontalScrollIndicator = {false}
                />
             </View>
-            <ScrollView className='flex-1 p-4'>
-                <OrderList status='Ready'/>
-                <OrderList status='Cooking'/>
-                <OrderList status='Pending'/>
-                <OrderList status='Delivered'/>
-            </ScrollView>
+            {
+                items.find(x=>x.name === "All")?.is_active?(
+                    <ScrollView className='flex-1 p-4'>
+                        <OrderList status='Ready'/>
+                        <OrderList status='Cooking'/>
+                        <OrderList status='Pending'/>
+                        <OrderList status='Delivered'/>
+                    </ScrollView>
+                ): <TablesScreen onSeatSelect={seat_id=>navigation.navigate("Orders By Seat", {seat_id})} />
+            }
+
         </View>
+    )
+}
+
+function TablesScreen({onSeatSelect}: {onSeatSelect: (seat_id: string)=>void}){
+    const [_seats, set_seats] = useState<Seat[]>([])
+    const [seats, setSeats] = useState(_seats);
+    const onSearch = (name: string) => {
+        setSeats(_seats.filter(x=>x.seat_name.includes(name)));
+    }
+    
+    useEffect(()=>{
+        getSeats("").then(res=>{
+            if(res.error) toastError("Error while fetching seats");
+            setSeats(res.data);
+        })  
+    }, [])
+    return(
+        <HideKeyboard>
+            <View className="flex-1 bg-white-200 px-4">
+                <View className="py-4">
+                    <SearchField label="Search" onSearch={onSearch} />
+                </View>
+                <FlatList
+                data={seats}
+                key = {"a"}
+                renderItem = {({item})=><TableCard onPress={onSeatSelect} data={item} />}
+                numColumns = {2}
+                showsVerticalScrollIndicator = {false}
+                />            
+            </View>
+        </HideKeyboard>
+    )
+}
+
+type OrderBySeatScreenProps = NativeStackScreenProps<WaiterStackParamList, "Orders By Seat">
+export function OrderBySeatScreen({navigation, route}: OrderBySeatScreenProps){
+    const [orders, setOrders] = useState<OrderItem[]>([]);
+    const { seat_id } = route.params;
+    const fetchOrder = async() => {
+        const res = await getOrders({seat_id});
+        setOrders(res.data);
+    }
+    useEffect(()=>{
+        fetchOrder();
+    }, [])
+    return(
+        <View className='flex-1 bg-white-200'>
+            <View className='flex-1 p-4'>
+                <ScrollView showsVerticalScrollIndicator = {false}>
+                    <OrderList data={orders} status='Ready'/>
+                    <OrderList data={orders} status='Cooking'/>
+                    <OrderList data={orders} status='Pending'/>
+                    <OrderList data={orders} status='Delivered'/>
+                </ScrollView>
+            </View>
+
+            {orders.every(x=>x.status === "Delivered") && <View className='p-4'><Button>Bill</Button></View>}
+        </View>   
     )
 }
 
