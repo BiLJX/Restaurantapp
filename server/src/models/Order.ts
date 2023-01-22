@@ -21,6 +21,15 @@ const schema = new Schema<OrderItem>({
     food_id: {
         type: String,
         required: true,
+    },
+    quantity: {
+        type: Number,
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ["Delivered","Ready","Cooking","Pending"],
+        default: "Pending"
     }
 }, {timestamps: true})
 
