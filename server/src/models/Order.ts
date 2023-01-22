@@ -4,7 +4,7 @@ const schema = new Schema<OrderItem>({
     order_item_id: {
         type: String,
         required: true,
-        unique: true
+        
     },
     order_id: {
         type: String,
@@ -35,7 +35,7 @@ const schema = new Schema<OrderItem>({
         enum: ["Delivered","Ready","Cooking","Pending"],
         default: "Pending"
     }
-}, {timestamps: true})
+}, {timestamps: true, toJSON: {virtuals: true,},toObject: {virtuals: true,},})
 
 schema.virtual('food', {
     ref: "food",

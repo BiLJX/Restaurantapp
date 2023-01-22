@@ -17,9 +17,9 @@ const TakeOrderlistScreen = ({navigation}: Props) => {
     const socket = useContext(SocketContext);
     const dispatch = useDispatch();
     const onOrder = useCallback(()=>{
-        navigation.pop(2);
+        // navigation.pop(2);
         socket.emit("order:create", order);
-        dispatch(clearTakeOrder());
+        // dispatch(clearTakeOrder());
     }, [])
     return (
         <View className='flex-1 bg-white-200 p-4'>
