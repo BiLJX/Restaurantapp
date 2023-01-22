@@ -9,7 +9,7 @@ export default function OnBoarindScreen({navigation}: Props){
     return(
         <SafeAreaView className="flex-1 bg-white-100">
             
-            <Image className="w-full h-[300px]" source={require("assets/onboarding.jpg")} />
+            <Image className="w-full flex-1" source={require("assets/onboarding.jpg")} />
             <View className="p-9">
                 <Text className="m-0 p-0 text-center text-5xl font-bold text-primary-200">Resta<Text className="text-secondary-blue">urant</Text></Text>
                 <Text className="text-center mt-4 text-gray-blue text-sm">Difficult to manage your restaurant? Let us help you change that</Text>

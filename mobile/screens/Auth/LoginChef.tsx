@@ -1,7 +1,7 @@
 import { Button } from "../../components/Buttons/buttons";
 import { Text } from "react-native";
 import { SafeAreaView } from "react-native";
-import { View, Image } from "react-native";
+import { View, Image, Platform } from "react-native";
 import AuthInput from "../../components/InputField/InputField";
 import { KeyboardAvoidingView } from "react-native";
 import { ScrollView } from "react-native";
@@ -27,7 +27,7 @@ export default function LoginChefScreen(){
     }
     return(
         <SafeAreaView className="flex-1 bg-white-100">
-            <KeyboardAvoidingView className="p-6 flex-1" behavior="padding">
+            <KeyboardAvoidingView className="p-6 flex-1" behavior={Platform.OS === "ios"?"padding":undefined}>
                 <ScrollView showsVerticalScrollIndicator = {false} className="flex-1" >
                     <Image className="w-full h-[300px]" source={require("assets/chef.jpg")} />
                     <Text className="mt-8 text-center text-3xl font-bold text-primary-200">Welcome Chef !</Text>

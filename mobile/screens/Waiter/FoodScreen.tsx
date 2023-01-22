@@ -30,7 +30,7 @@ const FoodScreen = ({navigation, route}: Props) => {
 
     return (
         <View className='flex-1 bg-white-200'>
-            <Image className='w-full h-[260]' source={{uri: food.image_url}} />
+            <Image className='w-full flex-1' source={{uri: food.image_url}} />
             <View className='p-4 border-b-[1px] border-b-gray-100'>
                 <Text className='text-gray-700 text-2xl mb-2 font-semibold'>{food.name}</Text>
                 <Text className='text-gray-700 text-xl font-semibold mb-4'>Rs {food.price}</Text>

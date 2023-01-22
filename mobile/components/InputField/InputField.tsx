@@ -22,8 +22,7 @@ export default function AuthInput({
             autoCorrect = {false} 
             importantForAutofill="no" 
             autoCapitalize="none" 
-            autoComplete="off" 
-            keyboardType="email-address" 
+            autoComplete="off"  
             className="ml-2 h-9 border-b-[1px] border-solid border-gray-100 flex-1 mb-2 text-base" 
             placeholder={placeholder}
             onChangeText={onChange}

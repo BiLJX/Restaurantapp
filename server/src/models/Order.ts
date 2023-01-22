@@ -1,10 +1,14 @@
 import { Schema, model } from "mongoose";
 import { OrderItem } from "@shared/Order";
 const schema = new Schema<OrderItem>({  
-    order_id: {
+    order_item_id: {
         type: String,
         required: true,
         unique: true
+    },
+    order_id: {
+        type: String,
+        required: true,
     },
     restaurant_id: {
         type: String,

@@ -1,6 +1,7 @@
 import { Food } from "./Menu";
 export type OrderStatus = "Delivered"|"Ready"|"Cooking"|"Pending"
 export interface OrderItem {
+    order_item_id: string,
     order_id: string,
     order_by: string,
     restaurant_id: string,
