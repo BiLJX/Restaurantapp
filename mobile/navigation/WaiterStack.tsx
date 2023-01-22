@@ -20,7 +20,7 @@ export default function WaiterStack(){
             <Stack.Screen name = "Menu" component={MenuScreen} options = {{headerShadowVisible: false}} />
             <Stack.Screen name = "Food" component={FoodScreen} />
             <Stack.Screen name = "List" component={TakeOrderlistScreen} />
-            <Stack.Screen name = "Orders" component={OrderListScreen} />
+            <Stack.Screen name = "Orders" component={OrderListScreen} options = {{headerShadowVisible: false}} />
         </Stack.Navigator>
     )
 }
