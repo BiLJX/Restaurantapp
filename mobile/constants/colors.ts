@@ -4,3 +4,10 @@ export const ICON_COLORS = {
     primary: "#ED254E",
     header_color: "#101821"
 }
+
+export const STATUS_COLORS = {
+    Ready: "#26FF03",
+    Cooking: "#FFB803",
+    Pending: "#BABABA",
+    Delivered: "#032BFF"
+}

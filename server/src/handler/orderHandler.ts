@@ -20,9 +20,8 @@ export default function orderHandler(socket: Socket, io: Server)
                 status: "Pending"
             }
         })
-        const o = await Orders.insertMany(order_item);
+        await Orders.insertMany(order_item);
         const orders = await Orders.find({order_id}).populate("food").exec();
-        console.log(orders)
         socket.to(`${socket.restaurant_id}:Kitchen`).emit("order:new", orders);
     }
 

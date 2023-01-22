@@ -8,7 +8,8 @@ export interface OrderItem {
     seat_id: string,
     quantity: number,
     food_id: string,
-    status: OrderStatus
+    status: OrderStatus,
+    food: Food
 }
 
 export interface Order {
