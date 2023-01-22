@@ -25,7 +25,6 @@ const OrderList = ({status}: Props) => {
 
 function OrderListItem({order}: {order: OrderItem}){
     const data = order.food;
-    console.log(order)
     if(!data) return (
         <></>
     )

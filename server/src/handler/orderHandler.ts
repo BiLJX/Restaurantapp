@@ -17,12 +17,14 @@ export default function orderHandler(socket: Socket, io: Server)
                 quantity: x.quantity,
                 order_by: socket.user_id,
                 restaurant_id: socket.restaurant_id,
-                status: "Pending"
+                status: "Pending",
+                food: {} as any
             }
         })
         await Orders.insertMany(order_item);
+        console.log(`${socket.restaurant_id}:Chef`)
         const orders = await Orders.find({order_id}).populate("food").exec();
-        socket.to(`${socket.restaurant_id}:Kitchen`).emit("order:new", orders);
+        io.to(`${socket.restaurant_id}:Chef`).emit("order:new", orders);
     }
 
     

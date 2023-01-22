@@ -6,9 +6,12 @@ const orderReducer = createSlice({
     reducers: {
         addOrderList: (state, action: PayloadAction<OrderItem[]>) => {
             return state = action.payload;
+        },
+        addOrderItems: (state, action: PayloadAction<OrderItem[]>) => {
+            return state = [...action.payload, ...state]
         }
     }
 })
 
 export default orderReducer.reducer;
-export const { addOrderList } = orderReducer.actions
+export const { addOrderList, addOrderItems } = orderReducer.actions

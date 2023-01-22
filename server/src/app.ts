@@ -59,6 +59,7 @@ async function _INIT_(){
             return;
         }
     }).on("connection", (socket)=>{
+        console.log(`${socket.restaurant_id}:${socket.role}`)
         socket.join([`${socket.restaurant_id}:${socket.role}` ,socket.user_id, socket.restaurant_id]);
         orderHandler(socket, io)
     })
