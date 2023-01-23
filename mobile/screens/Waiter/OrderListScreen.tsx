@@ -1,9 +1,9 @@
 import { View, Text, Dimensions, StyleSheet, ScrollView, FlatList, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { getOrders } from 'api/order-api';
 import { toastError } from 'components/Toast/toast';
 import { useDispatch, useSelector } from 'react-redux';
-import { addOrderList } from 'redux/orderReducer';
+import { addOrderList, changeOrderStatus, removeOrderItem } from 'redux/orderReducer';
 import OrderList from 'components/OrderList/OrderList';
 import { HideKeyboard } from 'components/Container/HideKeyboard';
 import SearchField from 'components/Search/searchField';
@@ -11,10 +11,11 @@ import { RootState } from 'redux/store';
 import TableCard from 'components/Table/TableCard';
 import { Seat } from '@shared/Seat';
 import { getSeats } from 'api/seat-api';
-import { OrderItem } from '@shared/Order';
+import { OrderItem, OrderStatus } from '@shared/Order';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button } from 'components/Buttons/buttons';
 import BottomSheet from '@gorhom/bottom-sheet';
+import { SocketContext } from 'contexts/socketContext';
 
 type Props = NativeStackScreenProps<WaiterStackParamList, "Orders">
 
@@ -30,6 +31,7 @@ const navItems: NavItem[] = [
 
 const OrderListScreen = ({navigation}: Props) => {
     const [items, setItems] = useState<NavItem[]>(navItems);
+    const socket = useContext(SocketContext);
     const dispatch = useDispatch();
     const fetchOrder = async() => {
         const res = await getOrders();
@@ -43,8 +45,20 @@ const OrderListScreen = ({navigation}: Props) => {
             return x;
         }))
     }
+    const onStatusChange = (data:{order_item_id: string, status: OrderStatus}) => {
+        dispatch(changeOrderStatus(data));
+    }
+    const onOrderItemDelete = (data: {order_item_id: string}) => {
+        dispatch(removeOrderItem(data.order_item_id));
+    }
     useEffect(()=>{
         fetchOrder();
+        socket.on("order-item:status", onStatusChange);
+        socket.on("order-item:cancel", onOrderItemDelete);
+        return(()=>{
+            socket.off("order-item:status", onStatusChange);
+            socket.off("order-item:cancel", onOrderItemDelete);
+        })
     }, [])
     return (
         <View className='flex-1 bg-white-200'>
@@ -79,12 +93,14 @@ function TablesScreen({onSeatSelect}: {onSeatSelect: (seat_id: string)=>void}){
     const onSearch = (name: string) => {
         setSeats(_seats.filter(x=>x.seat_name.includes(name)));
     }
+
     
     useEffect(()=>{
         getSeats("").then(res=>{
             if(res.error) toastError("Error while fetching seats");
             setSeats(res.data);
-        })  
+        })
+        
     }, [])
     return(
         <HideKeyboard>

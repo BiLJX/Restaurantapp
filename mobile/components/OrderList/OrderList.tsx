@@ -8,7 +8,7 @@ import BottomSheet, { BottomSheetModal, BottomSheetModalProvider } from '@gorhom
 import { Employee } from '@shared/User'
 import { Button } from 'components/Buttons/buttons'
 import { SocketContext } from 'contexts/socketContext'
-import { addOrderItems, removeOrderItem } from 'redux/orderReducer'
+import { addOrderItems, changeOrderStatus, removeOrderItem } from 'redux/orderReducer'
 
 type Props = {
     status: OrderStatus,
@@ -37,6 +37,7 @@ function OrderListItem({order}: {order: OrderItem}){
     
     const onOpenModal = () => {
         if(role === "Waiter" && order.status !== "Pending") return;
+        if(role === "Chef" && (order.status === "Ready" || order.status === "Delivered")) return;
         setModalOpen(true);
     }
     if(!data) return (
@@ -44,7 +45,7 @@ function OrderListItem({order}: {order: OrderItem}){
     )
     return(
         <>
-            <ItemModal onClose={()=>setModalOpen(false)} modalOpen = {modalOpen} data = {order} />
+            {modalOpen && <ItemModal onClose={()=>setModalOpen(false)} data = {order} />}
             <TouchableOpacity className='w-full rounded-lg mb-3' onPress={onOpenModal}>
                 <View className='flex-row p-2 rounded-lg bg-white-100 shadow-sm h-[80px]'>
                     <Image className='w-[60] h-[60] rounded-lg' source={{uri: data.image_url}} />
@@ -75,21 +76,41 @@ function StatusLabel({status}: {status: OrderStatus}){
 interface ModalProps {
     onClose: () => void;
     data: OrderItem;
-    modalOpen: boolean
 }
-function ItemModal({onClose, data, modalOpen}: ModalProps){
+function ItemModal({onClose, data}: ModalProps){
     const { role } = useSelector((state: RootState)=>state.current_employee.data as Employee)
     const socket = useContext(SocketContext);
     const dispatch = useDispatch();
+    const { order_item_id } = data;
+    interface ChefHandler {
+        [key: string]: {
+            title: string,
+            buttonTitle: string
+            handler: ()=>void;
+        }
+    }
     const onCancel = () => {
         socket.emit("order-item:cancel", {order_item_id: data.order_item_id});
         dispatch(removeOrderItem(data.order_item_id))
         onClose(); 
     }
-    const handlers = {
+    const chefHandlers: ChefHandler  = {
         "Pending": {
+            title: "Change status to cooking?",
+            buttonTitle: "Cooking",
             handler(){
-                
+                socket.emit("order-item:status", {status: "Cooking", order_item_id});
+                dispatch(changeOrderStatus({order_item_id, status: "Cooking"}))
+                onClose(); 
+            }
+        },
+        "Cooking": {
+            title: "Change status to Ready?",
+            buttonTitle: "Ready",
+            handler(){
+                socket.emit("order-item:status", {status: "Ready", order_item_id});
+                dispatch(changeOrderStatus({order_item_id, status: "Ready"}))
+                onClose(); 
             }
         }
     }
@@ -100,9 +121,15 @@ function ItemModal({onClose, data, modalOpen}: ModalProps){
             <Button onPress={onCancel} style={{marginBottom: 0}} className='mb-0'>Cancel Order</Button>
         </>
     )
+    else Content = (
+        <>
+            <Text className='mb-4 text-lg font-semibold text-gray-blue'>{chefHandlers[data.status].title}</Text>
+            <Button onPress={chefHandlers[data.status].handler} style={{marginBottom: 0}} className='mb-0'>{chefHandlers[data.status].buttonTitle}</Button>
+        </>
+    )
     return(
         <Modal 
-        visible = {modalOpen} 
+        visible
         transparent 
         onRequestClose={onClose}
         >

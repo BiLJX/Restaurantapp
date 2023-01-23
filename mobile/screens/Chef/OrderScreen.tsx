@@ -1,4 +1,4 @@
-import { OrderItem } from "@shared/Order"
+import { OrderItem, OrderStatus } from "@shared/Order"
 import { getOrders } from "api/order-api"
 import OrderList from "components/OrderList/OrderList"
 import { toastError } from "components/Toast/toast"
@@ -6,7 +6,7 @@ import { SocketContext } from "contexts/socketContext"
 import { useEffect, useContext, useState } from "react"
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, StyleSheet, FlatList } from "react-native"
 import { useDispatch } from "react-redux"
-import { addOrderItems, addOrderList } from "redux/orderReducer"
+import { addOrderItems, addOrderList, changeOrderStatus, removeOrderItem } from "redux/orderReducer"
 
 interface NavItem {
     name: string,
@@ -33,6 +33,13 @@ export function ChefOrderScreen(){
         }))
     }
 
+    const onStatusChange = (data:{order_item_id: string, status: OrderStatus}) => {
+        dispatch(changeOrderStatus(data));
+    }
+    const onOrderItemDelete = (data: {order_item_id: string}) => {
+        dispatch(removeOrderItem(data.order_item_id));
+    }
+
     useEffect(()=>{
         getOrders().then(res=>{
             if(res.error) return toastError("Error while fetching orders.");
@@ -41,9 +48,13 @@ export function ChefOrderScreen(){
         const onNewOrder = (items: OrderItem[]) => {
             dispatch(addOrderItems(items));
         }
-        socket.on("order:new", onNewOrder)
+        socket.on("order:new", onNewOrder);
+        socket.on("order-item:status", onStatusChange);
+        socket.on("order-item:cancel", onOrderItemDelete);
         return(()=>{
-            socket.off("order:new", onNewOrder) 
+            socket.off("order:new", onNewOrder);
+            socket.off("order-item:status", onStatusChange);
+            socket.off("order-item:cancel", onOrderItemDelete); 
         })
     }, []);
     let Content: JSX.Element;
