@@ -1,5 +1,5 @@
 import { View, Text, FlatList, TouchableOpacity, Image } from 'react-native'
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useState } from 'react'
 import { NativeStackScreenProps } from '@react-navigation/native-stack'
 import { clearTakeOrder, removeFoodFromTakeOrder } from 'redux/takeorderReducer'
 import { useDispatch, useSelector } from 'react-redux'
@@ -8,6 +8,7 @@ import { Entypo } from '@expo/vector-icons';
 import { TakeOrderItem } from '@shared/Order'
 import { Button } from 'components/Buttons/buttons'
 import { SocketContext } from 'contexts/socketContext'
+import { ScrollView } from 'react-native-gesture-handler'
 
 type Props = NativeStackScreenProps<WaiterStackParamList, "List">
 
@@ -28,6 +29,7 @@ const TakeOrderlistScreen = ({navigation}: Props) => {
                 <FlatList 
                 data = {foodorders}
                 renderItem = {({item})=><OrderCard onPress={data=>navigation.navigate("Food", data)} data = {item} />}
+                keyExtractor = {(item)=>item.food_id}
                 />
             </View>
             <View className='py-4'>
@@ -41,7 +43,7 @@ const OrderCard = ({data, onPress}: {data: TakeOrderItem, onPress: (data: TakeOr
     const dispatch = useDispatch();
     return(
         <TouchableOpacity className='w-full rounded-lg mb-3' onPress={()=>onPress(data)}>
-            <View className='flex-1 flex-row p-2 rounded-lg bg-white-100 shadow-sm'>
+            <View className='flex-row p-2 rounded-lg bg-white-100 shadow-sm h-[80px]'>
                 <Image className='w-[60] h-[60] rounded-lg' source={{uri: data.image_url}} />
                 <View className='ml-4'>
                     <Text className='text-base font-medium text-gray-700'>{data.name}</Text>

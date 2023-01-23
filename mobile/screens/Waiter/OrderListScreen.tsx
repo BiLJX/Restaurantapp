@@ -1,5 +1,5 @@
 import { View, Text, Dimensions, StyleSheet, ScrollView, FlatList, TouchableOpacity } from 'react-native';
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { getOrders } from 'api/order-api';
 import { toastError } from 'components/Toast/toast';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +14,7 @@ import { getSeats } from 'api/seat-api';
 import { OrderItem } from '@shared/Order';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { Button } from 'components/Buttons/buttons';
+import BottomSheet from '@gorhom/bottom-sheet';
 
 type Props = NativeStackScreenProps<WaiterStackParamList, "Orders">
 
@@ -58,14 +59,16 @@ const OrderListScreen = ({navigation}: Props) => {
             {
                 items.find(x=>x.name === "All")?.is_active?(
                     <ScrollView className='flex-1 p-4'>
-                        <OrderList status='Ready'/>
-                        <OrderList status='Cooking'/>
-                        <OrderList status='Pending'/>
-                        <OrderList status='Delivered'/>
+                        <View className='h-[100%]'>
+                            <OrderList status='Ready'/>
+                            <OrderList status='Cooking'/>
+                            <OrderList status='Pending'/>
+                            <OrderList status='Delivered'/>
+                        </View>
+                        
                     </ScrollView>
                 ): <TablesScreen onSeatSelect={seat_id=>navigation.navigate("Orders By Seat", {seat_id})} />
             }
-
         </View>
     )
 }
@@ -122,7 +125,6 @@ export function OrderBySeatScreen({navigation, route}: OrderBySeatScreenProps){
                     <OrderList data={orders} status='Delivered'/>
                 </ScrollView>
             </View>
-
             {orders.every(x=>x.status === "Delivered") && <View className='p-4'><Button>Bill</Button></View>}
         </View>   
     )

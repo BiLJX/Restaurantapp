@@ -1,17 +1,20 @@
 import React from "react";
 import { Text } from "react-native";
 import { TouchableHighlight } from "react-native"
+import { StyleProps } from "react-native-reanimated";
 interface ButtonProps {
     onPress?: (...args: any) => void;
     children?: any;
     variant?: "primary"|"secondary"|"secondary-2",
-    className?: string
+    className?: string,
+    style?: StyleProps
 }
 export function Button({
     onPress,
     children,
     variant = "primary",
-    className = ""
+    className = "",
+    style
 }: ButtonProps){
     const generateColor = () => {
         if(variant === "primary") return "bg-primary-200";
@@ -19,7 +22,7 @@ export function Button({
         return "bg-secondary-orange"
     }
     return(
-        <TouchableHighlight className={`w-full rounded-2xl ${generateColor()} py-3 mb-5 ${className}`} onPress={onPress}>
+        <TouchableHighlight style = {style} className={`w-full rounded-2xl ${generateColor()} py-3 mb-5 ${className}`} onPress={onPress}>
             <Text className="text-center text-xl text-white-100 font-bold">{children}</Text>
         </TouchableHighlight>
     )
