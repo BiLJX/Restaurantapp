@@ -36,7 +36,7 @@ function OrderListItem({order}: {order: OrderItem}){
     const { role } = useSelector((state: RootState)=>state.current_employee.data as Employee);
     
     const onOpenModal = () => {
-        if(role === "Waiter" && order.status !== "Pending") return;
+        if(role === "Waiter" && (order.status == "Delivered" || order.status === "Cooking")) return;
         if(role === "Chef" && (order.status === "Ready" || order.status === "Delivered")) return;
         setModalOpen(true);
     }
@@ -82,7 +82,7 @@ function ItemModal({onClose, data}: ModalProps){
     const socket = useContext(SocketContext);
     const dispatch = useDispatch();
     const { order_item_id } = data;
-    interface ChefHandler {
+    interface Handler {
         [key: string]: {
             title: string,
             buttonTitle: string
@@ -94,7 +94,27 @@ function ItemModal({onClose, data}: ModalProps){
         dispatch(removeOrderItem(data.order_item_id))
         onClose(); 
     }
-    const chefHandlers: ChefHandler  = {
+    const waiterHandler: Handler = {
+        "Pending": {
+            title: "Cancel the order?",
+            buttonTitle: "Cancel Order",
+            handler() {
+                socket.emit("order-item:cancel", {order_item_id: data.order_item_id});
+                dispatch(removeOrderItem(data.order_item_id))
+                onClose(); 
+            },
+        },
+        "Ready": {
+            title: "Is food delivered?",
+            buttonTitle: "Delivered?",
+            handler() {
+                socket.emit("order-item:status", {status: "Delivered", order_item_id});
+                dispatch(changeOrderStatus({order_item_id, status: "Delivered"}))
+                onClose(); 
+            },
+        }
+    }
+    const chefHandlers: Handler  = {
         "Pending": {
             title: "Change status to cooking?",
             buttonTitle: "Cooking",
@@ -117,8 +137,8 @@ function ItemModal({onClose, data}: ModalProps){
     let Content: JSX.Element = <></>;
     if(role === "Waiter") Content = (
         <>
-            <Text className='mb-4 text-lg font-semibold text-gray-blue'>Cancel The Order?</Text>
-            <Button onPress={onCancel} style={{marginBottom: 0}} className='mb-0'>Cancel Order</Button>
+            <Text className='mb-4 text-lg font-semibold text-gray-blue'>{waiterHandler[data.status].title}</Text>
+            <Button onPress={waiterHandler[data.status].handler} style={{marginBottom: 0}} className='mb-0'>{waiterHandler[data.status].buttonTitle}</Button>
         </>
     )
     else Content = (
