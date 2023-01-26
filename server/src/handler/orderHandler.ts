@@ -19,12 +19,47 @@ export default function orderHandler(socket: Socket, io: Server)
                     order_by: socket.user_id,
                     restaurant_id: socket.restaurant_id,
                     status: "Pending",
+                    seat_name: "",
                     food: {} as any
                 }
             })
             await Orders.insertMany(order_item);
             console.log(`${socket.restaurant_id}:Chef`)
-            const orders = await Orders.find({order_id}).populate("food").exec();
+            const orders = await Orders.aggregate([
+                {$match:{order_id}},
+                {
+                    $lookup: {
+                        as: "food",
+                        from: "foods",
+                        foreignField: "food_id",
+                        localField: "food_id"
+                    }
+                },
+                {
+                    $lookup: {
+                        as: "seat_data",
+                        from: "seats",
+                        foreignField: "seat_id",
+                        localField: "seat_id"
+                    }
+                },
+                {
+                    $unwind: "$food"
+                },
+                {
+                    $unwind: "$seat_data"
+                },
+                {
+                    $addFields: {
+                        seat_name: "$seat_data.seat_name"
+                    }
+                },
+                {
+                    $project: {
+                        seat_data: 0
+                    }
+                }
+            ])
             io.to(`${socket.restaurant_id}:Chef`).emit("order:new", orders);
         } catch (error) {
             io.to(socket.user_id).emit("Error", {msg: "Error something went wrong :("});

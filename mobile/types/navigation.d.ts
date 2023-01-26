@@ -19,7 +19,7 @@ declare type WaiterStackParamList = {
     },
     "List",
     "Orders",
-    "Bill",
+    "Bill": {seat_id: string},
     "Orders By Seat": {seat_id: string};
 }
 

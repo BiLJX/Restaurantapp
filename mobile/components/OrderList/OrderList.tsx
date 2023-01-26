@@ -52,7 +52,7 @@ function OrderListItem({order}: {order: OrderItem}){
                     <View className='ml-4'>
                         <Text className='text-base font-medium text-gray-700'>{data.name}</Text>
                         <Text className='text-s mb-1 font-medium text-gray-200'>x{order.quantity}</Text>
-                        <Text className='text-s font-medium text-gray-200'>{order.seat_id}</Text>
+                        <Text className='text-s font-medium text-gray-200'>{order.seat_name}</Text>
                     </View>
                     <View className='h-full justify-center flex-1'>
                         <View className='self-end'>
