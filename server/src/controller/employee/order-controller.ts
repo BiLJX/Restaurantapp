@@ -1,4 +1,5 @@
 import { Bill } from "@shared/Order";
+import { Server } from "socket.io";
 import { Orders } from "../../models/Order";
 import { Controller } from "../../types/controller";
 import JsonResponse from "../../utils/Response";
@@ -69,6 +70,21 @@ export const retrieveBill: Controller = async(req, res) => {
             orders
         }
         jsonResponse.success(bill)
+    } catch (error) {
+        console.log(error);
+        jsonResponse.serverError();
+    }
+}
+
+export const billPaid: Controller = async(req, res) => {
+    const jsonResponse = new JsonResponse(res);
+    const { restaurant_id } = res.locals.employee;
+    const io: Server = req.app.locals.io;
+    try {
+        const seat_id = req.params.seat_id;
+        await Orders.deleteMany({seat_id});
+        io.to(restaurant_id).emit("order:paid", {seat_id});
+        jsonResponse.success();
     } catch (error) {
         console.log(error);
         jsonResponse.serverError();

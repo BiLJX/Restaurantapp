@@ -43,6 +43,7 @@ async function _INIT_(){
         console.log("listening on port "+PORT+"...")
     });
     const io = new Server(server);
+    
     io.use(async(socket, next)=>{
         try {
             const token = <string>socket.handshake.query.token;
@@ -63,5 +64,6 @@ async function _INIT_(){
         socket.join([`${socket.restaurant_id}:${socket.role}` ,socket.user_id, socket.restaurant_id]);
         orderHandler(socket, io)
     })
+    app.locals.io = io;
 }
 mongoose.connect(CONNECTION_URL).then(_INIT_)

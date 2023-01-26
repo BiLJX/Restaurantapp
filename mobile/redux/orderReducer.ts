@@ -19,9 +19,12 @@ const orderReducer = createSlice({
                     x.status = action.payload.status
                 }
             })
+        },
+        removeOrderBySeat: (state, action: PayloadAction<{seat_id: string}>) => {
+            return state = state.filter(x=>x.seat_id !== action.payload.seat_id);
         }
     }
 })
 
 export default orderReducer.reducer;
-export const { addOrderList, addOrderItems, removeOrderItem, changeOrderStatus } = orderReducer.actions
+export const { addOrderList, addOrderItems, removeOrderItem, changeOrderStatus, removeOrderBySeat } = orderReducer.actions

@@ -83,13 +83,23 @@ export default function orderHandler(socket: Socket, io: Server)
                     status
                 }
             })
-            io.to(socket.restaurant_id).emit("order-item:status", {order_item_id, status})
+            socket.broadcast.to(socket.restaurant_id).emit("order-item:status", {order_item_id, status})
         } catch (error) {
             io.to(socket.user_id).emit("Error", {msg: "Error something went wrong :("});
         }
     }
 
-    socket.on("order-item:status", onStatusChange)
+    const onPaid = async({seat_id}: {seat_id: string}) => {
+        try {
+            await Orders.deleteMany({seat_id});
+            io.to(socket.restaurant_id).emit("order:paid", {seat_id})
+        } catch (error) {
+            io.to(socket.user_id).emit("Error", {msg: "Error something went wrong :("});
+        }
+    }
+
+    socket.on("order-item:status", onStatusChange);
     socket.on("order:create", createOrder);
     socket.on("order-item:cancel", deleteOrderItem);
+    socket.on("order:paid", onPaid);
 }

@@ -81,7 +81,7 @@ export default function AppNav(){
 
 function ToastComponent(){
     return(
-        <View className="z-[999]" >
+        <View className="z-[999]" style = {{elevation: 10}} >
             <Toast /> 
         </View>
     )

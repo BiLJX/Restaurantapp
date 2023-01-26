@@ -6,7 +6,7 @@ import { SocketContext } from "contexts/socketContext"
 import { useEffect, useContext, useState } from "react"
 import { View, Text, ScrollView, TouchableOpacity, Dimensions, StyleSheet, FlatList } from "react-native"
 import { useDispatch } from "react-redux"
-import { addOrderItems, addOrderList, changeOrderStatus, removeOrderItem } from "redux/orderReducer"
+import { addOrderItems, addOrderList, changeOrderStatus, removeOrderBySeat, removeOrderItem } from "redux/orderReducer"
 
 interface NavItem {
     name: string,
@@ -48,9 +48,13 @@ export function ChefOrderScreen(){
         const onNewOrder = (items: OrderItem[]) => {
             dispatch(addOrderItems(items));
         }
+        const onOrderPaid = (data:{seat_id :string}) => {
+            dispatch(removeOrderBySeat(data));
+        }
         socket.on("order:new", onNewOrder);
         socket.on("order-item:status", onStatusChange);
         socket.on("order-item:cancel", onOrderItemDelete);
+        socket.on("order:paid", onOrderPaid);
         return(()=>{
             socket.off("order:new", onNewOrder);
             socket.off("order-item:status", onStatusChange);

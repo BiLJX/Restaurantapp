@@ -53,11 +53,11 @@ const OrderListScreen = ({navigation}: Props) => {
     }
     useEffect(()=>{
         fetchOrder();
-        socket.on("order-item:status", onStatusChange);
-        socket.on("order-item:cancel", onOrderItemDelete);
+        // socket.on("order-item:status", onStatusChange);
+        // socket.on("order-item:cancel", onOrderItemDelete);
         return(()=>{
-            socket.off("order-item:status", onStatusChange);
-            socket.off("order-item:cancel", onOrderItemDelete);
+            // socket.off("order-item:status", onStatusChange);
+            // socket.off("order-item:cancel", onOrderItemDelete);
         })
     }, [])
     return (

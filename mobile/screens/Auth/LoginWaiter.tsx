@@ -29,8 +29,8 @@ export default function LoginWaiterScreen(){
     return(
         <SafeAreaView className="flex-1 bg-white-100">
             <KeyboardAvoidingView className="p-6 flex-1" behavior={Platform.OS === "ios"?"padding":undefined}>
-                <ScrollView showsVerticalScrollIndicator = {false} className="flex-1" >
-                    <Image className="w-full h-[300px]" source={require("assets/waiter.jpg")} />
+                <View className="flex-1" >
+                    <Image className="w-full flex-1" source={require("assets/waiter.jpg")} />
                     <Text className="mt-8 text-center text-3xl font-bold text-secondary-blue">Welcome Waiter !</Text>
                     <Text className="text-center mt-4 text-gray-blue text-base mb-4">Login to your account</Text>
                     <AuthInput placeholder="Email ID" onChange={setEmail} icon={<MaterialIcons name="alternate-email" size={24} color={ICON_COLORS.input} />} />
@@ -39,7 +39,7 @@ export default function LoginWaiterScreen(){
                     <View className="mt-8">
                         <Button variant="secondary" onPress={onLogin}>Login</Button>  
                     </View>
-                </ScrollView>
+                </View>
             </KeyboardAvoidingView>
        </SafeAreaView>
     )
