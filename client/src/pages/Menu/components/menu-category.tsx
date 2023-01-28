@@ -5,10 +5,10 @@ import CategoryListModal from "./category-lists";
 import React, { useEffect, useRef, useState } from "react";
 import { FoodCategory } from "@shared/Menu";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "types";
 import { getFoodCategories } from "api/menu";
 import { toastError } from "components/Toast/toast";
-import { addFoodCategoriesArray } from "redux/FoodCategory/categoryActions";
+import { RootState } from "redux/store";
+import { addFoodCategoriesArray } from "redux/foodCategoriesReducer";
 
 export default function MenuCategory(){
     const [categoryList, setCategorylist] = useState(false);

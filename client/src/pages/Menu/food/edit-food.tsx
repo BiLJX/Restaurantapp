@@ -11,8 +11,9 @@ import { Food, FoodCategory } from "@shared/Menu";
 import { createFood, deleteFood, editFood, getFoodById, getFoodCategories } from "api/menu";
 import { toastError, toastSuccess } from "components/Toast/toast";
 import { useDispatch } from "react-redux";
-import { addFood, removeFood, updateFood } from "redux/Food/foodActions";
+
 import { useNavigate, useParams } from "react-router-dom";
+import { removeFood, updateFood } from "redux/foodReducer";
 const defaultValue = {
     description: "",
     food_category_id: "cat",
@@ -52,7 +53,7 @@ export default function EditFoodPage(){
         if(!window.confirm("Are you sure you want to delete?")) return;
         const res = await deleteFood((data as Food).food_id);
         if(res.error) return toastError(res.message);
-        dispatch(removeFood(data as Food));
+        dispatch(removeFood((data as Food).food_id));
         toastSuccess("Successfully deleted");
         navigate("/menu");
     }

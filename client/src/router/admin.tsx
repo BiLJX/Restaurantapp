@@ -10,7 +10,7 @@ import SeatsPage from "pages/Seat/seats-page";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { RootState } from "types";
+import { RootState } from "redux/store";
 
 export default function AdminRoutes(){
     const navigate = useNavigate();

@@ -5,12 +5,12 @@ import { toastError } from "components/Toast/toast";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { addFoodArray } from "redux/Food/foodActions";
-import { RootState } from "types";
 import { AddFoodCard, FoodCard } from "./components/food-card";
 import MenuCategory from "./components/menu-category";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import "./menu.scss";
+import { RootState } from "redux/store";
+import { addFoodArray } from "redux/foodReducer";
 export function MenuPage(){
     const foods = useSelector((state: RootState) => state.foods);
     const [search, setSearch] = useState("")

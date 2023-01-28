@@ -5,7 +5,7 @@ import { toastError, toastSuccess } from "components/Toast/toast";
 import { useState } from "react";
 import ReactModal from "react-modal";
 import { useDispatch } from "react-redux";
-import { addFoodCategory } from "redux/FoodCategory/categoryActions";
+import { addFoodCategory } from "redux/foodCategoriesReducer";
 
 export function CreateCategoryModal({onClose}: {onClose: ()=>void}){
     const [categoryName, setCategoryName] = useState("");

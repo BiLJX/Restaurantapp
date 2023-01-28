@@ -9,7 +9,7 @@ import { toastError } from "components/Toast/toast";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { addEmployee } from "redux/Employee/employeeActions";
+import { addEmployee } from "redux/employeeReducer";
 import "./style.scss";
 const defaultData: CreateEmployeeData = {
     contact_no: "" as any,

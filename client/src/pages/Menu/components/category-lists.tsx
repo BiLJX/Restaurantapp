@@ -6,10 +6,10 @@ import DeleteRoundedIcon from '@mui/icons-material/DeleteRounded';
 import { CreateCategoryModal } from "./create-category";
 import { FoodCategory } from "@shared/Menu";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "types";
 import { deleteFoodCategory } from "api/menu";
 import { toastError } from "components/Toast/toast";
-import { removeFoodCategory } from "redux/FoodCategory/categoryActions";
+import { RootState } from "redux/store";
+import { removeFoodCategory } from "redux/foodCategoriesReducer";
 
 
 export default function CategoryListModal({onClose}: {onClose: ()=>void}){
@@ -50,7 +50,7 @@ function List({data}: {data: FoodCategory}){
         if(!window.confirm("Are you sure you want to delete?")) return;
         const res = await deleteFoodCategory(data.food_category_id);
         if(res.error) return toastError(res.message);
-        dispatch(removeFoodCategory(data));
+        dispatch(removeFoodCategory(data.food_category_id));
     }
     return(
         <div className = "list">

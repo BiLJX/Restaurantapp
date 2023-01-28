@@ -6,8 +6,9 @@ import { useEffect, useState } from "react";
 import { adminLogin } from "api/auth";
 import { toastError } from "components/Toast/toast";
 import { useDispatch } from "react-redux";
-import { adminSignIn } from "redux/Admin/adminActions";
 import { useNavigate } from "react-router-dom";
+import { signIn } from "redux/adminReducer";
+import { Employee } from "@shared/User";
 export default function LoginPage(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -21,7 +22,7 @@ export default function LoginPage(){
             toastError(res.message);
             return;
         }
-        dispatch(adminSignIn(res.data));
+        dispatch(signIn(res.data as Employee));
         navigate("/");
     }
     return(

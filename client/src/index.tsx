@@ -9,14 +9,13 @@ import { Provider } from 'react-redux';
 import { ToastContainer } from "react-toastify";
 import Modal from "react-modal";
 import 'react-toastify/dist/ReactToastify.css';
-import { rootReducer } from 'redux/rootReducer';
+import { store } from 'redux/store';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
 Modal.setAppElement("#root")
 
-const store = createStore(rootReducer);
 
 
 root.render(

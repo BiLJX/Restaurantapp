@@ -6,7 +6,8 @@ import { toastError, toastSuccess } from "components/Toast/toast";
 import moment from "moment";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { removeEmployee } from "redux/Employee/employeeActions";
+import { removeEmployee } from "redux/employeeReducer";
+
 import "./data-table.scss"
 export default function DataTable({data}: {data: Employee[]}){
     return(
@@ -39,7 +40,7 @@ function Tr({data}: {data: Employee}){
         const res = await deleteEmployee(data.user_id);
         if(res.error) return toastError(res.message);
         toastSuccess("Deleted employee");
-        dispatch(removeEmployee(data));
+        dispatch(removeEmployee(data.user_id));
     }
     return(
         <tr>

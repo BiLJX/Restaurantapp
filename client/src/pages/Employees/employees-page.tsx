@@ -4,14 +4,14 @@ import Header from "components/Header/header";
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import { Button } from "components/Form/buttons";
 import "./style.scss";
-import { RootState } from "types";
 import { useDispatch, useSelector } from "react-redux";
 import DataTable from "./Table/data-table";
 import { useEffect, useState } from "react";
 import { getEmployees } from "api/user";
 import { toastError } from "components/Toast/toast";
-import { addEmployeeArray } from "redux/Employee/employeeActions";
 import { useNavigate } from "react-router-dom";
+import { RootState } from "redux/store";
+import { addEmployeeArray } from "redux/employeeReducer";
 
 export default function EmployeesPage(){
     const employees = useSelector((state: RootState)=>state.employees);

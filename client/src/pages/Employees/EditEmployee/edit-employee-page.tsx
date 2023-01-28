@@ -9,7 +9,7 @@ import { toastError } from "components/Toast/toast";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { addEmployee, updateEmployee } from "redux/Employee/employeeActions";
+import { updateEmployee } from "redux/employeeReducer";
 import "./style.scss";
 export default function EditEmployeePage(){
     const [data, setData] = useState<CreateEmployeeData>();

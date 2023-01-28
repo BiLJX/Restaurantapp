@@ -12,8 +12,8 @@ import { FoodCategory } from "@shared/Menu";
 import { createFood, editFood, getFoodCategories } from "api/menu";
 import { toastError } from "components/Toast/toast";
 import { useDispatch } from "react-redux";
-import { addFood, updateFood } from "redux/Food/foodActions";
 import { useNavigate } from "react-router-dom";
+import { addFood } from "redux/foodReducer";
 const defaultValue = {
     description: "",
     food_category_id: "cat",
