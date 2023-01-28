@@ -141,7 +141,7 @@ export function OrderBySeatScreen({navigation, route}: OrderBySeatScreenProps){
                     <OrderList data={orders} status='Delivered'/>
                 </ScrollView>
             </View>
-            {orders.every(x=>x.status === "Delivered") && <View className='p-4'><Button onPress={()=>navigation.push("Bill", {seat_id})}>Bill</Button></View>}
+            {orders.length !== 0 && orders.every(x=>x.status === "Delivered") && <View className='p-4'><Button onPress={()=>navigation.push("Bill", {seat_id})}>Bill</Button></View>}
         </View>   
     )
 }

@@ -28,15 +28,9 @@ export const adminLogin: Controller = async(req, res) => {
             {
                 $unwind: "$restaurant"
             },
-            {
-                $project: {
-                    password: 0
-                }
-            }
         ]);
         const admin = adminArr[0]
         if(!admin) return jsonResponse.clientError("Acount not found");
-       
         const password_matched = await bcrypt.compare(password, admin.password);
         if(!password_matched) return jsonResponse.clientError("Invalid password");
         
@@ -75,6 +69,7 @@ export const employeeLogin: Controller = async(req, res) => {
         ]);
         const employee = employeeArr[0]
         if(!employee) return jsonResponse.clientError("Acount not found");
+        
         const password_matched = await bcrypt.compare(password, employee.password);
         if(!password_matched) return jsonResponse.clientError("Invalid password");
         //jwt

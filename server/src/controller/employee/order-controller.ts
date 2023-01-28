@@ -1,8 +1,12 @@
 import { Bill } from "@shared/Order";
+import { SalesLog } from "../../models/SalesLog";
 import { Server } from "socket.io";
+import { makeId } from "../../utils/idgen";
 import { Orders } from "../../models/Order";
 import { Controller } from "../../types/controller";
 import JsonResponse from "../../utils/Response";
+import { OrderLog } from "../../models/OrderLogs";
+import { OrderLogI } from "@shared/Sales";
 
 export const retrieveOrders: Controller = async(req, res) => {
     const jsonResponse = new JsonResponse(res);
@@ -82,9 +86,34 @@ export const billPaid: Controller = async(req, res) => {
     const io: Server = req.app.locals.io;
     try {
         const seat_id = req.params.seat_id;
+        const orders = await Orders.find({seat_id, restaurant_id}).populate("food");
+
+        const total_price = orders.reduce((total, order)=>total + (order.quantity * order.food.price), 0)
+
         await Orders.deleteMany({seat_id});
         io.to(restaurant_id).emit("order:paid", {seat_id});
         jsonResponse.success();
+        //logs
+        try {
+            const order_log_data: OrderLogI[] = orders.map(x=>({
+                restaurant_id,
+                log_id: makeId(),
+                createdAt: new Date(),
+                food_id: x.food_id,
+                amount: x.food.price
+            }))
+            const sales_log = new SalesLog({
+                log_id: makeId(),
+                restaurant_id,
+                amount: total_price
+            })
+           
+            await sales_log.save();
+            await OrderLog.insertMany(order_log_data);
+        } catch (error) {
+            console.log(error)
+        }
+        
     } catch (error) {
         console.log(error);
         jsonResponse.serverError();
