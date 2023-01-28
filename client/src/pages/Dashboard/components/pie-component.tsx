@@ -6,7 +6,7 @@ import { RootState } from "redux/store";
 export default function PieComponent(){
     const { sales_by_food } = useSelector((state: RootState)=>state.dashboard.data as Dashboard)
     return(
-        <ElevatedContainer className="flex flex-1 flex-col card-sdw mt-4 flex-3 ml-4">
+        <ElevatedContainer className="flex w-[35%] flex-col card-sdw mt-4 ml-4">
             <div className="font-medium text-gray-700 text-lg mb-2">Sales by food</div>
             <div className="w-full flex-1 flex">
                 <Pie 

@@ -6,7 +6,7 @@ import { RootState } from "redux/store";
 export default function OrdersComponent(){
     const { orders } = useSelector((state: RootState)=>state.dashboard.data as Dashboard)
     return(
-        <ElevatedContainer className="flex flex-1 flex-col card-sdw mt-4 flex-3">
+        <ElevatedContainer className="flex flex-col card-sdw mt-4 flex-1">
             <div className="font-medium text-gray-700 text-lg mb-2">Orders</div>
             <div className="w-full h-full">
                 <Bar 
