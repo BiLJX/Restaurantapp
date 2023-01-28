@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Food } from "@shared/Menu";
 const foodReducer = createSlice({
-    name: "food_categories",
+    name: "food",
     initialState: [] as Food[],
     reducers: {
         addFoodArray: (state, action: PayloadAction<Food[]>) => {

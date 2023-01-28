@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Employee } from "@shared/User";
 
 const employeeReducer = createSlice({
-    name: "food_categories",
+    name: "employees",
     initialState: [] as Employee[],
     reducers: {
         addEmployeeArray: (state, action: PayloadAction<Employee[]>) => {

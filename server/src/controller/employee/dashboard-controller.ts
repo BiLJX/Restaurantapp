@@ -5,7 +5,7 @@ import { Restaurants } from "../../models/Restaurant";
 import JsonResponse from "../../utils/Response";
 import { Controller } from "../../types/controller";
 import { Dashboard } from "@shared/Dashboard"
-import { getLast30Day, getToday } from "../../utils/query";
+import { getLastDays, getToday } from "../../utils/query";
 import { SalesLog } from "../../models/SalesLog";
 import { OrderLog } from "../../models/OrderLogs";
 import moment from "moment"
@@ -105,7 +105,7 @@ export const retrieveDashboard: Controller = async(req, res) => {
             {
                 $match: {
                     restaurant_id,
-                    createdAt: getLast30Day()
+                    createdAt: getLastDays(14)
                 }
             },
             {
@@ -122,7 +122,7 @@ export const retrieveDashboard: Controller = async(req, res) => {
             {
                 $match: {
                     restaurant_id,
-                    createdAt: getLast30Day()
+                    createdAt: getLastDays(14)
                 }
             },
             {
@@ -144,11 +144,11 @@ export const retrieveDashboard: Controller = async(req, res) => {
             },
             orders: {
                 data: orders.map(x=>x.total_orders),
-                labels: orders.map(x=>`${moment(x._id.month.toString(), 'MM').format("MMMM")} ${x._id.day}`),
+                labels: orders.map(x=>`${moment(x._id.month.toString(), 'MM').format("MMM")} ${x._id.day}`),
             },
             revenue: {
                 data: revenue.map(x=>x.total_sales),
-                labels: orders.map(x=>`${moment(x._id.month.toString(), 'MM').format("MMMM")} ${x._id.day}`),
+                labels: orders.map(x=>`${moment(x._id.month.toString(), 'MM').format("MMM")} ${x._id.day}`),
             },
             sales_by_food: {
                 data: data1.order_logs.map(x=>x.count),

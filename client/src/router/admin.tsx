@@ -1,5 +1,6 @@
 import { getCurrentAdmin } from "api/auth";
 import NavBar from "components/Navigation/nav-bar";
+import DashbaordPage from "pages/Dashboard/dashboard";
 import CreateEmployeePage from "pages/Employees/CreateEmployee/create-employee-page";
 import EditEmployeePage from "pages/Employees/EditEmployee/edit-employee-page";
 import EmployeesPage from "pages/Employees/employees-page";
@@ -38,7 +39,7 @@ export default function AdminRoutes(){
         <> 
             <NavBar />
             <Routes>
-                <Route index element = {<></>} />
+                <Route index element = {<DashbaordPage />} />
                 <Route path = "menu/create" element = {<CreateMenuPage />} />
                 <Route path = "menu/food/:id" element = {<EditFoodPage />} />
                 <Route path = "menu" element = {<MenuPage />} />

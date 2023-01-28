@@ -9,9 +9,9 @@ export const getToday = () => {
     }
 }
 
-export const getLast30Day = () => {
+export const getLastDays = (days: number) => {
    return {
-    $gte: moment().subtract(30, "days").toDate(),
+    $gte: moment().subtract(days, "days").toDate(),
     
    }
 }
