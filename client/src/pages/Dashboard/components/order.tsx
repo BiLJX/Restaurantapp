@@ -16,7 +16,7 @@ export default function OrdersComponent(){
                     datasets:[{
                         data: orders.data,
                         backgroundColor: "#5B5F97",
-                        barThickness: 10
+                        barThickness: 15
                     }],
                     labels: orders.labels,
                 }}

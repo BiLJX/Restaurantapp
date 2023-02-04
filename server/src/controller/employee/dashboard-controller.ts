@@ -148,10 +148,14 @@ export const retrieveDashboard: Controller = async(req, res) => {
             orders: {
                 data: orders.map(x=>x.total_orders),
                 labels: orders.map(x=>`${moment(x._id.month.toString(), 'MM').format("MMM")} ${x._id.day}`),
+                // data: [5, 8, 10, 8, 2, 4, 6, 7],
+                // labels: ["Jan 1", "Jan 2", "Jan 3", "Jan 4", "Jan 5", "Jan 6", "Jan 7", "Jan 8"]
             },
             revenue: {
                 data: revenue.map(x=>x.total_sales),
                 labels: orders.map(x=>`${moment(x._id.month.toString(), 'MM').format("MMM")} ${x._id.day}`),
+                // data: [500, 844, 1022, 811, 200, 400, 600, 700],
+                // labels: ["Jan 1", "Jan 2", "Jan 3", "Jan 4", "Jan 5", "Jan 6", "Jan 7", "Jan 8"]
             },
             sales_by_food: {
                 data: data1.order_logs.map(x=>x.count),

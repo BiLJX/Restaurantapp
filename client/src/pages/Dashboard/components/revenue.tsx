@@ -16,7 +16,15 @@ export default function RevenueComponent(){
                     datasets:[{
                         data: revenue.data,
                         tension: 0.3,
-                        borderColor: "#ED254E"
+                        borderColor: "#ED254E",
+                        backgroundColor: (context)=>{
+                            const ctx = context.chart.ctx;
+                            const gradient = ctx.createLinearGradient(0, 0, 0, 200);
+                            gradient.addColorStop(0, "#ED254E4b");
+                            gradient.addColorStop(1, "#FFFFFF00");
+                            return gradient;
+                        },
+                        fill: true,
                     }],
                     labels: revenue.labels,
                     // datasets: [{
