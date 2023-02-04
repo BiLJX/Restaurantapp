@@ -30,11 +30,6 @@ export const retrieveDashboard: Controller = async(req, res) => {
                     foreignField: "restaurant_id",
                     pipeline: [
                         {
-                            $match: {
-                                createdAt: getToday()
-                            }
-                        },
-                        {
                             $lookup: {
                                 from: "foods",
                                 as: "food",
@@ -53,6 +48,14 @@ export const retrieveDashboard: Controller = async(req, res) => {
                                 _id: "$food.name",
                                 count: {$sum: 1}
                             }
+                        },
+                        {
+                            $sort: {
+                                count: -1
+                            }
+                        },
+                        {
+                            $limit: 3
                         }
                     ]
                 }
@@ -137,10 +140,10 @@ export const retrieveDashboard: Controller = async(req, res) => {
         ])
         const data: Dashboard = {
             dash_board_overview: {
-                total_employees_count: data1.employees_count,
-                total_orders_count: data1.sales_logs.count,
-                total_revenue_count: data1.sales_logs.total_sales,
-                total_revenue_month_count: data1.sales_logs.total_sales
+                total_employees_count: data1.employees_count || 0,
+                total_orders_count: data1.sales_logs?.count || 0,
+                total_revenue_count: data1.sales_logs?.total_sales || 0,
+                total_revenue_month_count: data1.sales_logs?.total_sales || 0
             },
             orders: {
                 data: orders.map(x=>x.total_orders),
