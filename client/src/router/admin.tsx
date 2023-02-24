@@ -26,7 +26,7 @@ export default function AdminRoutes(){
         }
     }
     useEffect(()=>{
-        if(!admin){
+        if(!admin.data){
             checkLogin()
         }
     }, [])

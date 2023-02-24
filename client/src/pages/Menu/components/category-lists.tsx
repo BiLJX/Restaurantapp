@@ -26,12 +26,12 @@ export default function CategoryListModal({onClose}: {onClose: ()=>void}){
         className="container elevated category-list-modal" 
         overlayClassName="modal-overlay" 
         isOpen>
-            <header className = "searchbar">
+            {/* <header className = "searchbar">
                 <div className = "icon center">
                     <SearchIcon />
                 </div>
                 <input type = "text" placeholder="Search food categories..." />
-            </header>
+            </header> */}
             <div className = "list-container">
                 <div onClick={()=>toggleCreateModal(true)} className = "list center" style = {{color: "var(--secondary-blue)", fontWeight: "bold"}}>
                     Add Category

@@ -40,12 +40,12 @@ export default function SeatList(){
     return(
         <ElevatedContainer className="seat-list-modal">
             {create_modal_active && <CreateSeat onCreate={onCreate} onClose={()=>toggleCreateModal(false)} />}
-            <header className = "searchbar">
+            {/* <header className = "searchbar">
                 <div className = "icon center">
                     <SearchIcon />
                 </div>
                 <input type = "text" placeholder="Search seats..." />
-            </header>
+            </header> */}
             <div className = "list-container">
                 <div onClick={()=>toggleCreateModal(true)} className = "list center" style = {{color: "var(--secondary-blue)", fontWeight: "bold"}}>
                     Add Seat

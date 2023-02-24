@@ -30,7 +30,7 @@ export default function LoginPage(){
             <ElevatedContainer style={{padding: "1.5rem"}}>
                 <form className="login-form" onSubmit={onLogin}>
                     <header className="center">
-                        <h1 className="text-primary">Admin Panel</h1>
+                        <h1 className="text-primary font-bold text-3xl">Admin Panel</h1>
                     </header>
                     <TextField
                     className="input"

@@ -22,7 +22,8 @@ const FoodScreen = ({navigation, route}: Props) => {
     const addToList = () => {
         if(quantity === 0) return toastError("Please add quantity");
         if(food_exists) {
-            return dispatch(updateFoodOfTakeOrder({...food, quantity}));
+            dispatch(updateFoodOfTakeOrder({...food, quantity}));
+            return navigation.goBack();
         }
         dispatch(addFoodToTakeOrder({...food, quantity}));
         navigation.goBack();

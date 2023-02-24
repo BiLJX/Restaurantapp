@@ -9,6 +9,7 @@ export const getToday = () => {
     }
 }
 
+
 export const getLastDays = (days: number) => {
    return {
     $gte: moment().subtract(days, "days").toDate(),

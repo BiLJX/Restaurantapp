@@ -16,6 +16,7 @@ export const retrieveDashboard: Controller = async(req, res) => {
         interface AggregatedData extends Restaurant{
             order_logs: {_id: string, count: number}[],
             sales_logs: {_id: null, total_sales: number, count: number},
+            sales_logs_month: {_id: null, total_sales: number, count: number},
             employees_count: number
         }
         const [data1] = await Restaurants.aggregate<AggregatedData>([
@@ -85,8 +86,38 @@ export const retrieveDashboard: Controller = async(req, res) => {
                 }
             },
             {
+                $lookup: {
+                    from: "sales_logs",
+                    as: "sales_logs_month",
+                    localField: "restaurant_id",
+                    foreignField: "restaurant_id",
+                    pipeline: [
+                        {
+                            $match: {
+                                createdAt: getLastDays(30)
+                            }
+                        },
+                        {
+                            $group: {
+                                _id: null,
+                                total_sales: {
+                                    $sum: "$amount"
+                                },
+                                count: {$sum: 1}
+                            }
+                        }
+                    ]
+                }
+            },
+            {
                 $unwind: {
                     path: "$sales_logs",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+            {
+                $unwind: {
+                    path: "$sales_logs_month",
                     preserveNullAndEmptyArrays: true
                 }
             },
@@ -143,7 +174,7 @@ export const retrieveDashboard: Controller = async(req, res) => {
                 total_employees_count: data1.employees_count || 0,
                 total_orders_count: data1.sales_logs?.count || 0,
                 total_revenue_count: data1.sales_logs?.total_sales || 0,
-                total_revenue_month_count: data1.sales_logs?.total_sales || 0
+                total_revenue_month_count: data1.sales_logs_month?.total_sales || 0
             },
             orders: {
                 data: orders.map(x=>x.total_orders),
