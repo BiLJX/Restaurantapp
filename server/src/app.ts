@@ -33,9 +33,9 @@ app.use(express.static(path.join("build")))
 //api
 app.use("/api", ApiRoutes)
 
-// app.get("/*", (req, res)=>{
-//     res.sendFile(path.join(__dirname,"..", "build", "index.html"));
-// })
+app.get("/*", (req, res)=>{
+    res.sendFile(path.join(__dirname,"..", "build", "index.html"));
+})
 //init app
 
 async function _INIT_(){

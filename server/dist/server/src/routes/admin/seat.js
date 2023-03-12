@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminSeatRoutes = void 0;
+var express_1 = require("express");
+var seat_controller_1 = require("../../controller/admin/seat-controller");
+var router = (0, express_1.Router)();
+exports.AdminSeatRoutes = router;
+router.post("/create", seat_controller_1.createSeat);
+router.get("/", seat_controller_1.retrieveSeats);
+router.delete("/delete/:seat_id", seat_controller_1.deleteSeat);

@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.OrderRoutes = void 0;
+var order_controller_1 = require("../../controller/employee/order-controller");
+var express_1 = require("express");
+var router = (0, express_1.Router)();
+exports.OrderRoutes = router;
+router.get("/", order_controller_1.retrieveOrders);
+router.get("/bill/:seat_id", order_controller_1.retrieveBill);
+router.put("/bill/paid/:seat_id", order_controller_1.billPaid);

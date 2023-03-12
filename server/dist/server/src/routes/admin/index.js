@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminRoutes = void 0;
+var express_1 = require("express");
+var dashboard_1 = require("./dashboard");
+var menu_1 = require("./menu");
+var seat_1 = require("./seat");
+var user_1 = require("./user");
+var router = (0, express_1.Router)();
+exports.AdminRoutes = router;
+router.use("/user", user_1.AdminUserRoutes);
+router.use("/menu", menu_1.AdminMenuRoutes);
+router.use("/seats", seat_1.AdminSeatRoutes);
+router.use("/dashboard", dashboard_1.AdminDashboardRoutes);

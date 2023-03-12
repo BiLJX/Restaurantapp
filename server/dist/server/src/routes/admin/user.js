@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.AdminUserRoutes = void 0;
+var express_1 = require("express");
+var user_controller_1 = require("../../controller/admin/user-controller");
+var router = (0, express_1.Router)();
+exports.AdminUserRoutes = router;
+router.get("/current", user_controller_1.getCurrentAdmin);
+router.post("/employee/create", user_controller_1.createEmployee);
+router.get("/employee", user_controller_1.retrieveEmployee);
+router.get("/employee/:id", user_controller_1.retrieveEmployeeById);
+router.patch("/employee/edit", user_controller_1.editEmployee);
+router.delete("/employee/delete/:id", user_controller_1.deleteEmployee);

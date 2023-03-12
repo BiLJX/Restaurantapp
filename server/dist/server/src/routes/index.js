@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ApiRoutes = void 0;
+var express_1 = require("express");
+var adminAuth_1 = require("../middleware/adminAuth");
+var admin_1 = require("./admin");
+var auth_1 = require("./auth");
+var employee_1 = require("./employee");
+var employeeAuth_1 = require("../middleware/employeeAuth");
+var router = (0, express_1.Router)();
+exports.ApiRoutes = router;
+router.use("/auth", auth_1.AuthRoutes);
+router.use("/admin/", adminAuth_1.adminAuth, admin_1.AdminRoutes);
+router.use("/employee/", employeeAuth_1.employeeAuthMiddleware, employee_1.EmployeeRoutes);

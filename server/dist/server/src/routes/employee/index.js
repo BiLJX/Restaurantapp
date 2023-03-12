@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmployeeRoutes = void 0;
+var express_1 = require("express");
+var menu_1 = require("./menu");
+var order_1 = require("./order");
+var seat_1 = require("./seat");
+var user_1 = require("./user");
+var router = (0, express_1.Router)();
+exports.EmployeeRoutes = router;
+router.use("/user", user_1.EmployeeUserRoutes);
+router.use("/seats", seat_1.EmployeeSeatRoutes);
+router.use("/menu", menu_1.EmployeeMenuRoutes);
+router.use("/orders", order_1.OrderRoutes);
