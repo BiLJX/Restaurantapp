@@ -44,7 +44,7 @@ export function ContentSection({
             className="flex-1 flex flex-col space-y-8 px-8 py-8" 
             initial={{y: 200, opacity: 0}}
             whileInView={{ y: 0, opacity: 1 }}
-            transition={{ease: "linear", duration: .7}}
+            transition={{ease: "linear", duration: .6}}
             viewport={{ once: true }}
             >
                 <h1 className="font-medium text-4xl text-gray-700">{title}</h1>

@@ -1,5 +1,6 @@
 import Section, { ContentSection } from "@/components/Section/Section"
 import { useEffect } from "react"
+import FeatureLists from "./FeatureList"
 
 export default function Home(){
     return(
@@ -12,9 +13,7 @@ export default function Home(){
             additional_button_label="Contact us for integration"
             img_src="/contents/Menu.png"
             />
-           <Section>
-            
-           </Section>
+            <FeatureLists />
         </>
     )
 }
@@ -34,4 +33,3 @@ function InitialSection(){
         </Section>
     )
 }
-
