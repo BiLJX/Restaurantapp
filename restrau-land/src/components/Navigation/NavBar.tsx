@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
+const defaultNavState = {
+    bg: "[transparent]",
+    color: "white-100"
+}
 export default function NavBar(){
-    const defaultNavState = {
-        bg: "[transparent]",
-        color: "white-100"
-    }
+    
     const [navState, setNavState] = useState(defaultNavState)
     const toggleNavBarBg = (state: boolean) => {
         if(state) return setNavState({

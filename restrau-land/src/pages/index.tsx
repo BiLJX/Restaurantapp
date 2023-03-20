@@ -5,12 +5,16 @@ export default function Home(){
     return(
         <>
             <InitialSection />
+        
             <ContentSection
             title="Best Online Restaurant Order taking solution for Nepal"
             sub_title="Easy to use and best UI of the app makes it the favorite choice for many restaurant owners in Nepal."
             additional_button_label="Contact us for integration"
             img_src="/contents/Menu.png"
             />
+           <Section>
+            
+           </Section>
         </>
     )
 }
