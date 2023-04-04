@@ -1,6 +1,9 @@
-import Section, { ContentSection } from "@/components/Section/Section"
-import { useEffect } from "react"
-import FeatureLists from "./FeatureList"
+import Section, { ContentSection } from "@/components/Section/Section";
+import { useEffect } from "react";
+import FeatureLists from "./FeatureList";
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { Heading, LearnMoreButton, Para } from "@/components/Content/content";
 
 export default function Home(){
     return(
@@ -13,7 +16,25 @@ export default function Home(){
             additional_button_label="Contact us for integration"
             img_src="/contents/Menu.png"
             />
+
             <FeatureLists />
+
+            <ContentSection
+            title="Real time order tracking for waiters and chefs"
+            sub_title="Change order status or track if the food is pending to be cooked or cooking, cooked, delivered from the app. "
+            additional_button_label="Learn more on Real Time Tracking"
+            img_src="/contents/Menu.png"
+            reverse
+            />
+
+            <ContentSection
+            title="Manage Food Items of your Restuarant"
+            sub_title="Manage Food Items of your restaurant by creating, editing and deleting. Also add a category for them."
+            additional_button_label="Learn more on managing foods"
+            img_src="/contents/Menu.png"
+            />
+
+            <AnalyticsSection />
         </>
     )
 }
@@ -30,6 +51,24 @@ function InitialSection(){
                     <button className="bg-primary-200 flex-1 p-2 rounded-md">Try Now</button>
                 </div>
             </div>
+        </Section>
+    )
+}
+
+function AnalyticsSection(){
+    return(
+        <Section className="flex flex-col items-center">
+            <motion.div className="img-container p-6">
+                <Image src = "/contents/Menu.png"  width = {800/1.3} height = {544/1.3} className = "object-contain" alt="image"  />
+            </motion.div>
+            <motion.div className="flex flex-col text-center space-y-12 px-[15rem]">
+                <div className="px-[5rem]">
+
+                    <Heading>Track your restaurants performance from Analytics</Heading>
+                </div>
+                <Para>Our powerful analytical dashboard provides you best analytics and performance graphs and charts of your restaurant. You can view your total sales, total orders, revenue etc.</Para>
+                <LearnMoreButton>Learn more About analytics</LearnMoreButton>
+            </motion.div>
         </Section>
     )
 }

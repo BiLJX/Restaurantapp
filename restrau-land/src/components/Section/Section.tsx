@@ -1,6 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useInView } from "framer-motion";
 import Image from "next/image";
+import { useRef } from "react";
 const divVairants = {
     visible: { opacity: 1, scale: 4, transition: { duration: 1 } },
     hidden: { opacity: 0, scale: 0 }
@@ -20,21 +21,23 @@ interface ContentSectionProps {
     title: string,
     sub_title: string,
     additional_button_label: string,
-    img_src: any
+    img_src: any,
+    reverse?: boolean
 }
 export function ContentSection({
     title,
     sub_title,
     additional_button_label,
-    img_src
+    img_src,
+    reverse
 }:ContentSectionProps){
-    const controls = useAnimation();
-
+    const imageKey = useRef(reverse?"y":"x");
+    const contentKey = useRef(reverse?"x":"y");
     return(
-        <section className="w-[full] flex-row-reverse flex items-center space-x-3 p-10 bg-white-100">
+        <section className={`w-[full] ${reverse?"":"flex-row-reverse"} flex items-center space-x-3 p-10 bg-white-100`}>
             <motion.div 
-            initial={{x: 300, opacity: 0}}
-            whileInView={{ x: 0, opacity: 1 }}
+            initial={{[imageKey.current]: 300, opacity: 0}}
+            whileInView={{ [imageKey.current]: 0, opacity: 1 }}
             transition={{ease: "linear", duration: .7}}
             viewport={{ once: true }}
             className="img-container p-6">
@@ -42,8 +45,8 @@ export function ContentSection({
             </motion.div>
             <motion.div 
             className="flex-1 flex flex-col space-y-8 px-8 py-8" 
-            initial={{y: 200, opacity: 0}}
-            whileInView={{ y: 0, opacity: 1 }}
+            initial={{[contentKey.current]: 200, opacity: 0}}
+            whileInView={{ [contentKey.current]: 0, opacity: 1 }}
             transition={{ease: "linear", duration: .6}}
             viewport={{ once: true }}
             >
