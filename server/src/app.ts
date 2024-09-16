@@ -16,7 +16,7 @@ import orderHandler from "./handler/orderHandler"
 
 
 //constants
-const CONNECTION_URL = "mongodb+srv://BiLJX:42a3RePvN1DGXkDh@cluster0.vyegx.mongodb.net/RMS?retryWrites=true&w=majority"
+const CONNECTION_URL = ""
 //const CONNECTION_URL = "mongodb+srv://cluster0.vyegx.mongodb.net/myFirstDatabase"
 const PORT = process.env.PORT || 5000
 
