@@ -3,7 +3,7 @@ import { Admins } from "./models/Admin";
 import { Restaurants } from "./models/Restaurant";
 import { makeId } from "./utils/idgen";
 import bcrypt from "bcrypt";
-const CONNECTION_URL = "mongodb+srv://BiLJX:42a3RePvN1DGXkDh@cluster0.vyegx.mongodb.net/RMS?retryWrites=true&w=majority"
+const CONNECTION_URL = ""
 
 async function _INIT_(){
     const salt = await bcrypt.genSalt(10);
